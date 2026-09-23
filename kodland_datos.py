@@ -15,6 +15,7 @@ import json
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -54,7 +55,7 @@ def contar_tareas(*listas):
                     env += 1
     return env, tot
 
-URL_PROFES = None  # se completa al arrancar, según la configuración
+URL_PROFES = None  # config.json o --profesor-id; si no, se detecta al iniciar sesión
 
 DIR_BASE = Path(__file__).resolve().parent
 
@@ -275,11 +276,32 @@ def guardar_sesion(page):
     except Exception:
         pass
 
+JS_ENLACE_PROFESOR = """() => {
+  const a = document.querySelector('a.app-logo[href^="/teachers/"]')
+         || document.querySelector('aside a[href^="/teachers/"], nav a[href^="/teachers/"]');
+  return a ? a.getAttribute('href') : '';
+}"""
+
+def _panel_listo(page):
+    """True si se ven los grupos del panel. Sin ID de profesor configurado, lo
+    saca del logo del menú lateral (enlaza a /teachers/<ID> en todas las
+    páginas cuando hay sesión) y abre ese panel."""
+    global URL_PROFES
+    if URL_PROFES is None:
+        m = re.search(r"/teachers/(\d+)", page.evaluate(JS_ENLACE_PROFESOR) or "")
+        if not m:
+            return False
+        URL_PROFES = f"{BASE}/teachers/{m.group(1)}"
+        log(f"ID de profesor detectado: {m.group(1)}")
+        page.goto(URL_PROFES, wait_until="domcontentloaded")
+        time.sleep(3)
+    return page.locator("a[href*='/groups/']").count() > 0
+
 def esperar_sesion(page):
     """Va al panel de profesores; si hace falta login, espera a que el usuario lo haga."""
-    page.goto(URL_PROFES, wait_until="domcontentloaded")
+    page.goto(URL_PROFES or BASE, wait_until="domcontentloaded")
     time.sleep(3)
-    if page.locator("a[href*='/groups/']").count() > 0:
+    if _panel_listo(page):
         log("Sesión lista (no hizo falta iniciar sesión de nuevo).")
         guardar_sesion(page)
         return
@@ -294,7 +316,7 @@ def esperar_sesion(page):
     while time.time() < limite:
         time.sleep(5)
         try:
-            if page.locator("a[href*='/groups/']").count() > 0:
+            if _panel_listo(page):
                 log("Sesión detectada, continuamos.")
                 guardar_sesion(page)   # guardarla para no re-loguear la próxima vez
                 time.sleep(1)
@@ -303,7 +325,8 @@ def esperar_sesion(page):
             # volvemos al panel; nunca recargamos mientras se está logueando
             u = page.url
             host = urlparse(u).netloc.lower()
-            if host == "bo.kodland.org" and "login" not in u.lower() and "/teachers/" not in u:
+            if (URL_PROFES and host == "bo.kodland.org" and "login" not in u.lower()
+                    and "/teachers/" not in u):
                 page.goto(URL_PROFES, wait_until="domcontentloaded")
         except Exception:
             pass
@@ -676,54 +699,207 @@ def _primer_valor(dic, claves, _hondo=0):
                 return r
     return ""
 
-def datos_caratula(main, info_grupo, respaldo, nombre, codigo):
+DIAS = {1: "Lunes", 2: "Martes", 3: "Miércoles", 4: "Jueves", 5: "Viernes",
+        6: "Sábado", 7: "Domingo"}
+
+def _tipo_grupo(info_grupo):
+    """group_kind.title viene como "[8] Grupo regular, 14 estudiantes, 90
+    minutos": se deja "Grupo regular" (y "premium" si lo es)."""
+    kind = info_grupo.get("group_kind")
+    titulo = kind.get("title", "") if isinstance(kind, dict) else str(kind or "")
+    tipo = re.sub(r"^\[\d+\]\s*", "", titulo).split(",")[0].strip()
+    if tipo and info_grupo.get("group_is_premium"):
+        tipo += " (premium)"
+    return tipo
+
+def _dia_hora(info_grupo):
+    """group_schedule es [{"day": 2, "time": "16:00", …}] con day 1 = lunes (el
+    código COL…_MA-16 lo confirma), en la zona horaria del grupo."""
+    horario = info_grupo.get("group_schedule")
+    if not isinstance(horario, list):
+        return ""
+    partes = [f"{DIAS.get(h.get('day'), '')} {h.get('time') or ''}".strip()
+              for h in horario if isinstance(h, dict)]
+    texto = " y ".join(p for p in partes if p)
+    zona = info_grupo.get("group_timezone")
+    offset = zona.get("offset_utc") if isinstance(zona, dict) else ""
+    return f"{texto} ({offset})" if texto and offset else texto
+
+def datos_caratula(main, info_grupo, respaldo, nombre, codigo, info_alumno=None):
     """Datos básicos del estudiante para la carátula del reporte.
 
-    Se toman del backoffice y se completan con reportes/datos_<codigo>.json,
-    que manda sobre lo que venga de la API (ahí se corrige lo que falte o salga
+    La familia (acudiente, teléfono, país) no viene en la lista de alumnos del
+    grupo (`main`) sino en los datos generales del alumno (`info_alumno`, de
+    get_general_info_for_student_backoffice_page); el horario y el tipo, en los
+    datos del grupo. Todo se completa con reportes/datos_<codigo>.json, que
+    manda sobre lo que venga de la API (ahí se corrige lo que falte o salga
     mal). Ese JSON admite una clave "_grupo" con lo común a todo el grupo y una
     clave por nombre de alumno con lo suyo.
     """
+    alumno = info_alumno if isinstance(info_alumno, dict) else {}
     d = {
-        "acudiente": _primer_valor(main, ("parent_name", "parent_full_name",
-                                          "representative_name", "parent")),
-        "email": _primer_valor(main, ("email", "student_email", "parent_email", "login")),
-        "telefono": _primer_valor(main, ("phone", "phone_number", "parent_phone", "telephone")),
-        "pais": _primer_valor(main, ("country", "country_name")),
+        "acudiente": _primer_valor(alumno, ("parent_name",)) or _primer_valor(
+            main, ("parent_name", "parent_full_name", "representative_name", "parent")),
+        "email": _primer_valor(alumno, ("parent_email",)) or _primer_valor(
+            main, ("email", "student_email", "parent_email", "login")),
+        "telefono": _primer_valor(alumno, ("parent_phone", "student_phone")) or _primer_valor(
+            main, ("phone", "phone_number", "parent_phone", "telephone")),
+        "pais": _primer_valor(alumno, ("client_country",)) or _primer_valor(
+            main, ("country", "country_name")),
         "codigo_grupo": codigo,
-        "tipo_grupo": _primer_valor(info_grupo, ("group_type", "group_type_name", "type")),
-        "dia_hora": _primer_valor(info_grupo, ("schedule", "lesson_time", "group_schedule",
-                                               "day_and_time", "lesson_day")),
+        "tipo_grupo": _tipo_grupo(info_grupo),
+        "dia_hora": _dia_hora(info_grupo),
     }
     manual = dict(respaldo.get("_grupo", {}) or {})
     manual.update(respaldo.get(nombre, {}) or {})
     d.update({k: v for k, v in manual.items() if str(v or "").strip()})
     return d
 
-def generar_reportes_grupo(ctx, page, grupo, pw):
+def _sin_tildes(t):
+    """Minúsculas y sin tildes, para comparar nombres como los escribe uno."""
+    t = unicodedata.normalize("NFKD", str(t or "")).lower()
+    return " ".join("".join(c for c in t if not unicodedata.combining(c)).split())
+
+
+def coincide_alumno(nombre, busqueda):
+    """True si cada palabra de la búsqueda aparece en el nombre (sin importar
+    orden, mayúsculas ni tildes): "perez juan" encuentra a "Juan Pérez Gómez"."""
+    palabras = _sin_tildes(nombre).split()
+    return all(any(w.startswith(b) for w in palabras) for b in _sin_tildes(busqueda).split())
+
+
+def id_de_alumno(texto):
+    """ID numérico si `texto` es un ID o la URL de la ficha del alumno
+    (https://bo.kodland.org/students/1346293); si es un nombre, ""."""
+    t = str(texto or "").strip()
+    m = re.search(r"/students/(\d+)", t) or re.fullmatch(r"(\d+)", t)
+    return m.group(1) if m else ""
+
+
+def _id_grupo(grupo):
+    m = re.search(r"/groups/(\d+)", grupo.get("url", "") or "")
+    return m.group(1) if m else ""
+
+
+def grupos_desde_ficha(ctx, page, sid):
+    """Grupos del alumno `sid`, según su ficha (bo.kodland.org/students/<sid>).
+
+    No usa el panel de tutor ni un ID de profesor: sirve para cualquier cuenta
+    del backoffice que pueda ver al alumno (tutor, ventas / ISM…). Abre la ficha,
+    espera a que haya sesión (si hace falta, a que se inicie) y pide
+    /students/<sid>/backoffice_groups/, la misma lista que carga la propia
+    ficha: group_id, group_title (el código), status y course_title de cada
+    grupo en que está o estuvo inscrito."""
+    url = f"{BASE}/students/{sid}"
+    llamadas = []
+
+    def al_responder(resp):
+        try:
+            if (resp.request.resource_type in ("xhr", "fetch") and "/api/" in resp.url
+                    and resp.status == 200):
+                llamadas.append(resp.url)
+        except Exception:
+            pass
+
+    page.on("response", al_responder)
+    try:
+        page.goto(url, wait_until="domcontentloaded")
+        avisado = False
+        limite = time.time() + 600  # 10 minutos para iniciar sesión
+        while time.time() < limite:
+            # page.wait_for_timeout y no time.sleep: la API síncrona de
+            # Playwright solo entrega los eventos (y llena `llamadas`) mientras
+            # se le habla
+            page.wait_for_timeout(3000)
+            u = page.url
+            # en la ficha y con respuestas de la API: hay sesión
+            if f"/students/{sid}" in u and "login" not in u.lower() and llamadas:
+                break
+            if not avisado:
+                print()
+                print("=" * 62)
+                print("  Si aparece la página de login, inicia sesión en la ventana")
+                print("  de Chrome. El script continuará solo al abrir la ficha.")
+                print("=" * 62)
+                print()
+                avisado = True
+            if (urlparse(u).netloc.lower() == "bo.kodland.org" and "login" not in u.lower()
+                    and f"/students/{sid}" not in u):
+                page.goto(url, wait_until="domcontentloaded")  # ya entró: volver a la ficha
+        else:
+            raise RuntimeError("No se abrió la ficha del alumno tras 10 minutos. "
+                               "¿Tiene esta cuenta permiso para verlo?")
+        guardar_sesion(page)
+    finally:
+        try:
+            page.remove_listener("response", al_responder)
+        except Exception:
+            pass
+
+    paginas = [p for p in ctx.pages] or [page]
+    r, _ = api_llamar_multi(paginas, f"/students/{sid}/backoffice_groups/")
+    if r.get("status") != 200 or not isinstance(r.get("cuerpo"), list):
+        log(f"   no pude leer los grupos del alumno (status {r.get('status')})")
+        dump_debug(page, f"ficha_alumno_{sid}")
+        return []
+    return grupos_de_lista(r["cuerpo"])
+
+def grupos_de_lista(lista):
+    """Convierte la respuesta de /students/<ID>/backoffice_groups/ en los
+    grupos que espera generar_reportes_grupo."""
+    grupos = []
+    for g in lista if isinstance(lista, list) else []:
+        gid = g.get("group_id") if isinstance(g, dict) else None
+        if not gid:
+            continue
+        codigo = str(g.get("group_title") or f"grupo_{gid}").strip()
+        curso = re.sub(r"^\[\d+\]", "", g.get("course_title") or "").split("[")[0].strip()
+        log(f" · {codigo}: {curso or 'curso ¿?'} (grupo {g.get('status') or '¿?'})")
+        grupos.append({"codigo": codigo, "url": f"{BASE}/groups/{gid}"})
+    return grupos
+
+def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
     """Genera un 'Reporte de desarrollo' (PDF narrativo por módulo) por cada
     alumno inscrito del grupo, con % reales. Necesita reportes/curso_<slug>.json
-    con el contenido del curso (ver curso.example.json). No califica."""
+    con el contenido del curso (ver curso.example.json). No califica.
+    Con `alumno` solo genera el de quien coincida con ese nombre, o el de ese
+    ID si es un número o la URL de su ficha.
+
+    `api(ruta) -> {"status", "cuerpo"}` es de dónde salen los datos: por
+    defecto, llamadas en vivo desde las páginas de `ctx`; con un paquete de la
+    extensión, sus respuestas ya reunidas (y entonces ctx y page sobran)."""
     sys.path.insert(0, str(DIR_BASE))
     import generar_reporte as grep
     import glob as _glob
 
-    m = re.search(r"/groups/(\d+)", grupo.get("url", "") or "")
-    if not m:
+    gid = _id_grupo(grupo)
+    if not gid:
         log(f"   no pude leer el id del grupo ({grupo.get('url')})")
         return 0
-    gid = m.group(1)
-    paginas = [p for p in ctx.pages] or [page]
+    if api is None:
+        paginas = [p for p in ctx.pages] or [page]
+        def api(ruta):
+            return api_llamar_multi(paginas, ruta)[0]
 
     # curso + tutor
     titulo, prof = "", ""
-    r, _ = api_llamar_multi(paginas, f"/student_groups/{gid}/get_general_info_for_group_backoffice_page")
-    if r.get("status") == 200 and isinstance(r.get("cuerpo"), dict):
-        c = r["cuerpo"].get("course") or {}
-        titulo = c.get("title", "") or ""
-        gt = r["cuerpo"].get("group_teacher") or {}
-        if isinstance(gt, dict):
-            prof = gt.get("full_name") or ""
+    r = api(f"/student_groups/{gid}/get_general_info_for_group_backoffice_page")
+    info_grupo = r.get("cuerpo") if r.get("status") == 200 else None
+    if not isinstance(info_grupo, dict):
+        info_grupo = {}
+    c = info_grupo.get("course") or {}
+    titulo = c.get("title", "") or ""
+    gt = info_grupo.get("group_teacher") or {}
+    if isinstance(gt, dict):
+        prof = gt.get("full_name") or ""
+
+    # un grupo que aún no ha dado clase no tiene nada que informar: saldría
+    # con todos los módulos al 0 % y "módulo del informe" en el último
+    if info_grupo.get("passed_lessons_count") == 0:
+        inicio = str(info_grupo.get("group_start_time") or "").split(" ")[0]
+        log(f"   el grupo aún no ha empezado"
+            f"{' (primera clase el ' + inicio + ')' if inicio else ''}: no hay informe que hacer")
+        return 0
 
     # buscar el JSON de contenido del curso: todas las palabras del slug deben
     # aparecer en el título del curso; si varios encajan, gana el más específico
@@ -750,11 +926,24 @@ def generar_reportes_grupo(ctx, page, grupo, pw):
     curso = json.loads(Path(ruta_curso).read_text(encoding="utf-8"))
     log(f"   curso: {curso.get('curso')} (contenido: {Path(ruta_curso).name})")
 
-    r, _ = api_llamar_multi(paginas, f"/student_groups/{gid}/get_students_main_data")
+    r = api(f"/student_groups/{gid}/get_students_main_data")
     if r.get("status") != 200 or not isinstance(r.get("cuerpo"), list):
         log(f"   no pude leer los alumnos del grupo {gid} (status {r.get('status')})")
         return 0
     alumnos = r["cuerpo"]
+    sid_buscado = id_de_alumno(alumno)
+    if sid_buscado:
+        alumnos = [s for s in alumnos
+                   if str((s.get("main_info") or {}).get("student_id")) == sid_buscado]
+        if not alumnos:
+            log(f"   el alumno {sid_buscado} no está en este grupo")
+            return 0
+    elif alumno:
+        alumnos = [s for s in alumnos
+                   if coincide_alumno((s.get("main_info") or {}).get("full_name"), alumno)]
+        if not alumnos:
+            log(f"   ningún alumno del grupo coincide con «{alumno}»")
+            return 0
 
     codigo = grupo.get("codigo") or gid
     carpeta = re.sub(r"[^A-Za-z0-9_-]+", "_", f"{codigo}_desarrollo")
@@ -770,10 +959,6 @@ def generar_reportes_grupo(ctx, page, grupo, pw):
             log(f"   carátula: completando con {ruta_resp.name}")
         except Exception as e:
             log(f"   no pude leer {ruta_resp.name} ({e}); sigo sin él")
-    rg, _ = api_llamar_multi(paginas, f"/student_groups/{gid}/get_general_info_for_group_backoffice_page")
-    info_grupo = rg.get("cuerpo") if rg.get("status") == 200 else None
-    if not isinstance(info_grupo, dict):
-        info_grupo = {}
     # radiografía: solo los NOMBRES de los campos (no los datos de los alumnos),
     # para saber cómo se llaman de verdad y afinar datos_caratula sin adivinar.
     try:
@@ -804,9 +989,21 @@ def generar_reportes_grupo(ctx, page, grupo, pw):
         prog = s.get("progress_info", []) or []
         sid = main.get("student_id")
         nombre = main.get("full_name") or f"Alumno {sid}"
+        # la familia y el nombre completo están en los datos generales del
+        # alumno, no en la lista del grupo (que a veces trae solo el nombre)
+        ri = api(f"/students/{sid}/get_general_info_for_student_backoffice_page/")
+        info_alumno = ri.get("cuerpo") if ri.get("status") == 200 else None
+        if isinstance(info_alumno, dict):
+            completo = str(info_alumno.get("student_full_name") or "").strip()
+            if len(completo.split()) > len(nombre.split()):
+                nombre = completo
+        # si se pidió a este alumno por su ID se hace aunque ya no esté activo
+        # en el grupo (grupo terminado, cambio de horario); se avisa del estado
         if (main.get("status") or "").lower() != "active":
-            omitidos += 1
-            continue
+            if not sid_buscado:
+                omitidos += 1
+                continue
+            log(f"   aviso: {nombre} figura como «{main.get('status')}» en este grupo")
         try:
             pct = grep.pct_por_modulo(prog)
             nrea = len(pct)
@@ -819,8 +1016,8 @@ def generar_reportes_grupo(ctx, page, grupo, pw):
                 env = tot = 0
                 for l in mm.get("lessons_data", []):
                     lid = l.get("lesson_id")
-                    rc, _ = api_llamar_multi(paginas, f"/students/{sid}/lesson/{lid}/get_progress_for_class_tasks/")
-                    rh, _ = api_llamar_multi(paginas, f"/students/{sid}/lesson/{lid}/get_progress_for_homework_tasks/")
+                    rc = api(f"/students/{sid}/lesson/{lid}/get_progress_for_class_tasks/")
+                    rh = api(f"/students/{sid}/lesson/{lid}/get_progress_for_homework_tasks/")
                     e, t = contar_tareas(rc.get("cuerpo") if rc.get("status") == 200 else None,
                                               rh.get("cuerpo") if rh.get("status") == 200 else None)
                     env += e
@@ -834,7 +1031,8 @@ def generar_reportes_grupo(ctx, page, grupo, pw):
                     "total": len(ses), "sesiones": ses}
             alumno = {"alumno": nombre, "profesor": prof, "pct": pct,
                       "puntos": puntos, "tareas": tareas, "asistencia": asis,
-                      "datos": datos_caratula(main, info_grupo, respaldo, nombre, codigo)}
+                      "datos": datos_caratula(main, info_grupo, respaldo, nombre, codigo,
+                                              info_alumno)}
             html = grep.build_html(curso, alumno)
             base = "".join(ch for ch in nombre if ch.isalnum() or ch in " _-").strip() or "alumno"
             rpage.set_content(html, wait_until="networkidle")

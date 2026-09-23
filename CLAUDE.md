@@ -15,7 +15,17 @@ con IA y no se toca WhatsApp: solo se leen datos y se produce el PDF.
 py -3 informes.py                    # el grupo mas reciente
 py -3 informes.py --grupo COL12429   # un grupo concreto (o parte del codigo)
 py -3 informes.py --todos            # todos los grupos activos
+py -3 informes.py --alumno "Juan"    # un solo alumno (sin --grupo, lo busca en todos)
+py -3 informes.py --alumno 1346293   # por ID o URL de su ficha: un PDF por grupo
 ```
+
+Con un ID, `--alumno` mira también los grupos no activos y genera el informe
+aunque el alumno ya no figure como activo en alguno (curso terminado, cambio de
+horario); con un nombre, solo grupos activos y alumnos activos.
+
+Los `.bat` de la raíz hacen lo mismo con doble clic: `1 - Generar informes.bat`
+(un grupo) y `2 - Informe de un alumno.bat` (un alumno; acepta el ID como
+argumento, que es como lo llama la extensión).
 
 Sin conectarse a la plataforma, útil para trabajar en el diseño:
 
@@ -37,16 +47,29 @@ Todo lo demás es librería estándar; conviene que siga así.
 | `generar_reporte.py` | Arma el HTML del informe y lo pasa a PDF |
 | `reportes/curso_*.json` | Contenido de cada curso: módulos, aprendizajes, proyectos |
 | `reportes/img/` | Banner de Kodland de la carátula |
+| `extension/` | Extensión de Chrome: botón "Generar informe" en `/students/<ID>` |
+| `puente/` | Host de Native Messaging: guarda el paquete de la extensión y abre `informe_extension.bat` |
 
 El flujo es: `informes.py` abre Chrome con perfil persistente → `esperar_sesion`
 → `listar_grupos` → por cada grupo, `generar_reportes_grupo`, que consulta la
 API v2 y llama a `generar_reporte.build_html`.
+
+Con `--alumno <ID>` el flujo **no toca el panel de tutor ni el ID de
+profesor**: `grupos_desde_ficha` abre `bo.kodland.org/students/<ID>` (sirve
+también para esperar el login) y pide `/api/v2/students/<ID>/backoffice_groups/`,
+la lista que carga la propia ficha: `group_id`, `group_title` (el código),
+`status` y `course_title` de cada grupo. Así lo usa el equipo de ventas
+(**ISM**), que no tiene cuenta de tutor. `--grupo` ahí solo filtra esos grupos.
 
 ## Sesión
 
 El perfil de Chrome vive en `~/.kodland_calificador`, **compartido con
 KodlandFaster**: la sesión iniciada en cualquiera de los dos sirve en el otro.
 La primera vez hay que iniciar sesión a mano (el script espera).
+
+El ID de profesor (`config.json` o `--profesor-id`) es **opcional**: si falta,
+`_panel_listo` lo lee del logo del menú lateral, que en todas las páginas del
+backoffice enlaza a `/teachers/<ID>` del usuario con sesión.
 
 ## Qué NO se sube al repo
 
@@ -82,3 +105,38 @@ comprobar que no se cuela ninguno.**
   mensajes en español y sin tildes, explicando el porqué del cambio. No añadir
   líneas de co-autoría ni firmas de herramientas.
 - **Probar en local antes de subir nada.**
+
+## Extensión de Chrome
+
+Pone un botón **📄 Generar informe** abajo a la izquierda en la ficha del alumno
+(abajo a la derecha está el panel de KodlandFaster). Pensada para ventas
+(**ISM**): no necesita cuenta de tutor ni iniciar sesión en otro Chrome.
+
+1. `boton-informe.js` **reúne los datos en la propia página**, con la sesión de
+   quien la usa: la API pide el token de la cookie `access` como
+   `Authorization: Bearer` (solo con cookies responde 401). Pide las mismas
+   rutas que `generar_reportes_grupo`; si se cambian allí, hay que cambiarlas
+   aquí y en `RUTAS_PERMITIDAS` del puente.
+2. Las respuestas van por Native Messaging a `puente/puente_informes.py`, que
+   valida el ID y cada ruta contra la lista blanca, guarda
+   `registros/paquete_<ID>.json` y abre `puente/informe_extension.bat <ID>`.
+3. Ese .bat corre `informes.py --paquete …`: `generar_reportes_grupo` lee de
+   las respuestas (parámetro `api`) en vez de llamar en vivo, arma los PDF con
+   un Chromium oculto, **borra el paquete** (datos de un menor) y abre la
+   carpeta de salida.
+
+El token nunca sale del navegador: al puente solo llegan respuestas.
+
+Instalación, una vez por PC:
+1. `chrome://extensions` → Modo de desarrollador → *Cargar extensión sin
+   empaquetar* → carpeta `extension/`. Copiar su ID.
+2. Doble clic en `puente/instalar_puente.bat` y pegar el ID. Registra
+   `com.kodland.informes` en HKCU para Chrome y Edge.
+3. Recargar la extensión y la página del alumno.
+
+Si no conecta, mirar `puente/puente.log`. Si se carga la extensión desde otra
+carpeta cambia su ID y hay que reinstalar el puente. Es un host distinto al
+`com.kodland.puente` de KodlandFaster: pueden convivir.
+
+Los grupos que aún no han dado clase (`passed_lessons_count == 0`) no generan
+informe: saldrían con todos los módulos al 0 %.
