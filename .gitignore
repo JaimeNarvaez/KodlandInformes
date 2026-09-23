@@ -1,0 +1,21 @@
+# Configuración local: NO subir
+config.json
+
+# Datos personales de alumnos para la carátula (el .example sí se sube)
+reportes/datos_*.json
+
+# Resultados y datos generados (llevan información de alumnos): NO subir
+reportes/salida/
+depuracion/
+registros/
+
+# Caché y temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
