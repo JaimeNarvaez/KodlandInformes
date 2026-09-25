@@ -1,0 +1,89 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_minecraft.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Minecraft Education (Nível 1)",
+  "idioma": "pt",
+  "area_interes": "Programação e Construção de Mundos",
+  "proximo_nivel": "Minecraft 2",
+  "vision_general": "Ao longo do Minecraft Education, {alumno} aprendeu a programar com blocos (MakeCode) para construir mundos, mecanismos automatizados e jogos dentro do Minecraft. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "O Novo Mundo da Pedra Verde",
+      "descripcion": "{alumno} conheceu o Minecraft Education e deu seus primeiros passos programando com o MakeCode.",
+      "aprendizajes": [
+        "Comandos no MakeCode e controle do Agente",
+        "Comandos de movimento e navegação em labirintos",
+        "O laço de repetição e a automação",
+        "Construção em equipe passo a passo",
+        "Redstone: sinais, portas automáticas e fazendas"
+      ],
+      "proyecto": "Estrutura automatizada com MakeCode"
+    },
+    {
+      "numero": 2,
+      "titulo": "A Cidade da Luz",
+      "descripcion": "{alumno} construiu em grande escala usando coordenadas, laços e automação.",
+      "aprendizajes": [
+        "Sistema de coordenadas e construção precisa",
+        "Laços aninhados para muros e torres",
+        "O Agente constrói uma ponte por código",
+        "Clonagem de objetos para construir rápido",
+        "Casa inteligente e traçado de ruas"
+      ],
+      "proyecto": "Bairro Inteligente automatizado"
+    },
+    {
+      "numero": 3,
+      "titulo": "Oásis da Lógica: Jogos e Quebra-cabeças",
+      "descripcion": "{alumno} criou jogos programando eventos, condições e variáveis.",
+      "aprendizajes": [
+        "Eventos e condições",
+        "Variáveis e contadores para a pontuação",
+        "Jogos com armadilhas, botões e temporizadores",
+        "Zonas de teletransporte",
+        "Teste e equilíbrio do jogo"
+      ],
+      "proyecto": "Meu Jogo (minijogo próprio)"
+    },
+    {
+      "numero": 4,
+      "titulo": "Floresta Mecânica: Automação",
+      "descripcion": "{alumno} automatizou sistemas complexos com lógica e código.",
+      "aprendizajes": [
+        "Fazendas automáticas e coleta de recursos",
+        "Agente Jardineiro (plantar e colher)",
+        "Cadeias lógicas condicionais",
+        "Classificador de recursos e armazenamento",
+        "Fazenda de monstros"
+      ],
+      "proyecto": "Fazenda Inteligente automatizada"
+    },
+    {
+      "numero": 5,
+      "titulo": "A Fortaleza do Criador",
+      "descripcion": "Na etapa final, {alumno} desenvolveu seu próprio projeto, da ideia ao código.",
+      "aprendizajes": [
+        "Geração de ideias e plano do projeto",
+        "Programação de mecanismos básicos",
+        "Funções: código reutilizável",
+        "Gestão de eventos e ações do jogador",
+        "Apresentação do projeto"
+      ],
+      "proyecto": "Projeto próprio (apresentado)"
+    }
+  ],
+  "consideraciones": "Durante o Minecraft Education, {alumno} desenvolveu o pensamento algorítmico e a criatividade construindo e automatizando mundos com código. As competências trabalhadas foram:",
+  "competencias": [
+    "Algoritmos e lógica de laços",
+    "Controle do Agente e comandos do MakeCode",
+    "Coordenadas e construção em escala",
+    "Condicionais, eventos e variáveis",
+    "Automação de sistemas (redstone e fazendas)",
+    "Funções e estrutura do código",
+    "Resolução criativa de problemas"
+  ],
+  "proximo_paso": {
+    "titulo": "Minecraft 2",
+    "texto": "Considerando o interesse de {alumno} por construir e automatizar com código, o próximo passo recomendado é o Minecraft 2, onde criará projetos mais complexos e consolidará sua lógica de programação."
+  }
+}

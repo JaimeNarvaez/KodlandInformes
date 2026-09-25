@@ -1,0 +1,143 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_graphic_design.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Design Gráfico",
+  "idioma": "pt",
+  "area_interes": "Design Gráfico",
+  "proximo_nivel": "Ilustração",
+  "vision_general": "Ao longo do curso de Design Gráfico, {alumno} mergulhou no design profissional com Figma e Photopea, criando logotipos, identidades de marca, peças para redes sociais e um portfólio. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Introdução ao Design Gráfico no Figma",
+      "descripcion": "{alumno} conheceu o design gráfico e suas primeiras ferramentas no Figma.",
+      "aprendizajes": [
+        "O que é design gráfico",
+        "Primeiros designs no Figma",
+        "Plugins e gráficos vetoriais",
+        "Início do portfólio"
+      ],
+      "proyecto": "Primeiros banners no Figma"
+    },
+    {
+      "numero": 2,
+      "titulo": "As Ferramentas do Designer",
+      "descripcion": "{alumno} aprendeu os fundamentos da cor, da tipografia e da composição.",
+      "aprendizajes": [
+        "Teoria das cores",
+        "Fontes e tipografia",
+        "Fundamentos da composição",
+        "Grids modulares"
+      ],
+      "proyecto": "Composições com cor e tipografia"
+    },
+    {
+      "numero": 3,
+      "titulo": "Identidade de um Evento no Photopea",
+      "descripcion": "{alumno} aprendeu o tratamento de imagens criando a identidade de um evento.",
+      "aprendizajes": [
+        "Fundamentos do Photopea",
+        "Retoque e edição de fotos",
+        "Design criativo para um evento",
+        "Componentes da identidade"
+      ],
+      "proyecto": "Identidade visual de um evento"
+    },
+    {
+      "numero": 4,
+      "titulo": "Primeiro Projeto: Criação de um Logotipo",
+      "descripcion": "{alumno} conheceu o branding e criou seu primeiro logotipo.",
+      "aprendizajes": [
+        "Fundamentos do branding",
+        "O processo de um projeto de design",
+        "Design de logotipos",
+        "Mockups e publicidade"
+      ],
+      "proyecto": "Logotipo com mockups"
+    },
+    {
+      "numero": 5,
+      "titulo": "Desenvolvimento da Identidade de Marca",
+      "descripcion": "{alumno} criou uma identidade corporativa completa e seu manual de marca.",
+      "aprendizajes": [
+        "Componentes da identidade corporativa",
+        "Escolha de fontes e cores",
+        "Design de apresentações e infográficos",
+        "Manuais de marca e diretrizes"
+      ],
+      "proyecto": "Manual de marca próprio"
+    },
+    {
+      "numero": 6,
+      "titulo": "Design para Redes Sociais",
+      "descripcion": "{alumno} aprendeu a criar para redes sociais com estilo próprio.",
+      "aprendizajes": [
+        "Animação para redes sociais",
+        "Design de um perfil de rede social",
+        "Desenvolvimento de um estilo próprio"
+      ],
+      "proyecto": "Perfil de rede social"
+    },
+    {
+      "numero": 7,
+      "titulo": "Web Design",
+      "descripcion": "{alumno} conheceu o web design criando páginas e protótipos.",
+      "aprendizajes": [
+        "Criação de uma landing page",
+        "Protótipo de um aplicativo",
+        "Segredos do web design"
+      ],
+      "proyecto": "Landing page e protótipo de app"
+    },
+    {
+      "numero": 8,
+      "titulo": "Introdução ao Design Impresso",
+      "descripcion": "{alumno} criou várias peças de design para impressão.",
+      "aprendizajes": [
+        "Cartões de visita",
+        "Cartazes e capas de livro",
+        "Cartaz de conscientização social",
+        "Uso de redes neurais (IA) no Figma"
+      ],
+      "proyecto": "Quatro peças de design impresso"
+    },
+    {
+      "numero": 9,
+      "titulo": "Desenvolvimento de Projetos de Design",
+      "descripcion": "{alumno} levou uma ideia até um projeto de design concluído.",
+      "aprendizajes": [
+        "Da ideia ao conceito e ao plano do projeto",
+        "Direção visual e estilo",
+        "Ajustes iterativos",
+        "Montagem e entrega final"
+      ],
+      "proyecto": "Projeto de design completo"
+    },
+    {
+      "numero": 10,
+      "titulo": "Criando sua Marca Pessoal",
+      "descripcion": "Na etapa final, {alumno} reuniu seu portfólio profissional e se apresentou.",
+      "aprendizajes": [
+        "Orientação profissional e perfil no Behance",
+        "Organização dos projetos",
+        "Preparação da autoapresentação",
+        "Apresentação final"
+      ],
+      "proyecto": "Portfólio profissional no Behance"
+    }
+  ],
+  "consideraciones": "Durante o curso de Design Gráfico, {alumno} adquiriu destreza com ferramentas profissionais e criou um portfólio de projetos reais. As competências trabalhadas foram:",
+  "competencias": [
+    "Design com Figma e Photopea",
+    "Teoria das cores e tipografia",
+    "Composição e grids",
+    "Branding e identidade de marca",
+    "Design para redes sociais",
+    "Web design e design impresso",
+    "Uso de IA no design",
+    "Portfólio profissional (Behance)"
+  ],
+  "proximo_paso": {
+    "titulo": "Ilustração",
+    "texto": "Considerando o domínio de {alumno} no design gráfico, o próximo passo recomendado é um curso de Ilustração, onde ampliará sua linguagem visual e enriquecerá seu portfólio com obras próprias."
+  }
+}

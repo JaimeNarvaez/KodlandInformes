@@ -1,0 +1,144 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_illustration.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Ilustração",
+  "idioma": "pt",
+  "area_interes": "Ilustração Digital",
+  "proximo_nivel": "Design Gráfico",
+  "vision_general": "Ao longo do curso de Ilustração, {alumno} explorou a ilustração digital profissional — do esboço à arte para jogos, quadrinhos e animação —, construindo um portfólio próprio. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Introdução ao Desenho Digital",
+      "descripcion": "{alumno} ganhou confiança com a mesa digitalizadora e criou sua primeira ilustração.",
+      "aprendizajes": [
+        "Uso da mesa digitalizadora",
+        "Etapas de uma ilustração e linhas",
+        "Cor e texturas",
+        "Volume com luz e sombra"
+      ],
+      "proyecto": "Primeira ilustração original"
+    },
+    {
+      "numero": 2,
+      "titulo": "Ferramentas do Artista Digital",
+      "descripcion": "{alumno} dominou as funções do programa de ilustração.",
+      "aprendizajes": [
+        "Como funcionam as camadas",
+        "Vantagens da arte digital",
+        "Fundamentos da composição",
+        "Introdução à perspectiva"
+      ],
+      "proyecto": "Duas ilustrações digitais"
+    },
+    {
+      "numero": 3,
+      "titulo": "Artista de Mangá e Quadrinhos",
+      "descripcion": "{alumno} experimentou ser quadrinista criando sua própria história.",
+      "aprendizajes": [
+        "Esboço e estilização",
+        "Narrativa e desenho dos quadrinhos",
+        "Cor e volume",
+        "Concluir a história em quadrinhos"
+      ],
+      "proyecto": "História em quadrinhos de três cenas"
+    },
+    {
+      "numero": 4,
+      "titulo": "Ilustração de Livros",
+      "descripcion": "{alumno} aprendeu a equilibrar as cores e criou a capa de um livro.",
+      "aprendizajes": [
+        "Escolher cores para ilustrações",
+        "Volume com luz e sombra",
+        "Esboço da capa",
+        "Design da capa"
+      ],
+      "proyecto": "Capa de livro ilustrada"
+    },
+    {
+      "numero": 5,
+      "titulo": "Artista para Jogos",
+      "descripcion": "{alumno} criou ilustrações para jogos a partir de modelos 3D.",
+      "aprendizajes": [
+        "Volume e contraste",
+        "Texturas de objetos reais",
+        "Desenvolvimento de um objeto de jogo",
+        "Finalização e renderização"
+      ],
+      "proyecto": "Ilustração de um objeto de jogo"
+    },
+    {
+      "numero": 6,
+      "titulo": "Artista Conceitual de Personagens",
+      "descripcion": "{alumno} aprendeu a desenhar pessoas e a criar conceitos de personagem.",
+      "aprendizajes": [
+        "Desenhar o rosto e as emoções",
+        "Proporções do corpo humano",
+        "Gerar um conceito de personagem",
+        "Detalhamento do personagem"
+      ],
+      "proyecto": "Conceito de personagem próprio"
+    },
+    {
+      "numero": 7,
+      "titulo": "Artista Conceitual de Cenários",
+      "descripcion": "{alumno} criou espaços e cenas com diferentes perspectivas.",
+      "aprendizajes": [
+        "Perspectiva linear e atmosférica",
+        "Conceito de cena com Photobash",
+        "Criação de espaço realista"
+      ],
+      "proyecto": "Conceito de cena para jogo ou filme"
+    },
+    {
+      "numero": 8,
+      "titulo": "Ilustração Comercial",
+      "descripcion": "{alumno} trabalhou como ilustrador para um cliente, usando a IA de forma ética.",
+      "aprendizajes": [
+        "Fundamentos da ilustração publicitária",
+        "Mascote de marca e tabuleiro de jogo",
+        "Uso ético da IA em projetos",
+        "Ilustração para a embalagem de um produto"
+      ],
+      "proyecto": "Embalagem de produto ilustrada"
+    },
+    {
+      "numero": 9,
+      "titulo": "Animador 2D",
+      "descripcion": "{alumno} deu vida às suas ilustrações com animação clássica.",
+      "aprendizajes": [
+        "Animação quadro a quadro",
+        "Morphing",
+        "Bases da animação",
+        "Dar vida a uma ilustração"
+      ],
+      "proyecto": "Ilustração animada"
+    },
+    {
+      "numero": 10,
+      "titulo": "Portfólio e Projeto Final",
+      "descripcion": "Na etapa final, {alumno} organizou seu portfólio e apresentou seu projeto.",
+      "aprendizajes": [
+        "Organização de projetos em um portfólio",
+        "Desenvolvimento de um projeto individual",
+        "Preparação da apresentação",
+        "Formatura e demonstração"
+      ],
+      "proyecto": "Portfólio de ilustrações"
+    }
+  ],
+  "consideraciones": "Durante o curso de Ilustração, {alumno} desenvolveu técnica e estilo na ilustração digital e reuniu um portfólio com obras próprias. As competências trabalhadas foram:",
+  "competencias": [
+    "Desenho digital com mesa digitalizadora",
+    "Cor, luz e sombra",
+    "Composição e perspectiva",
+    "Ilustração de quadrinhos e livros",
+    "Arte conceitual (personagens e cenários)",
+    "Ilustração comercial e uso ético da IA",
+    "Animação 2D",
+    "Portfólio profissional"
+  ],
+  "proximo_paso": {
+    "titulo": "Design Gráfico",
+    "texto": "Considerando o talento de {alumno} para a ilustração, o próximo passo recomendado é um curso de Design Gráfico, onde somará ferramentas de branding, tipografia e design para potencializar seu portfólio."
+  }
+}

@@ -18,6 +18,7 @@ Uso:
 
 import argparse
 import base64
+import datetime
 import html as _html
 import json
 import os
@@ -48,7 +49,7 @@ UI = {
         "th_modulo": "Módulo", "th_tareas": "Tarefas", "th_puntos": "Pontos", "th_avance": "Progresso",
         "asis_titulo": "PRESENÇA NAS AULAS", "est_pres": "Presente", "est_aus": "Ausente",
         "est_just": "Justif.", "msg": "MENSAGEM PARA VOCÊ",
-        "firma": "ASSINATURA DO PROFESSOR(A)", "sello": "SELO KODLAND",
+        "tutor": "Tutor(a)",
         "datos": "DADOS BÁSICOS DO ESTUDANTE",
         "f_alumno": "Nome do estudante", "f_acu": "Nome do responsável",
         "f_mail": "E-mail", "f_tel": "Telefone", "f_pais": "País de residência",
@@ -69,6 +70,22 @@ UI = {
         ),
         "modo_pie": ("No fim do relatório inclui-se uma valoração do processo formativo de "
                      "{alumno}, destacando aspectos relevantes do seu desempenho."),
+        # mensaje final según el promedio (≥85, ≥70, ≥50, el resto)
+        "msg_textos": (
+            "Parabéns, {nombre}! Seu desempenho é excelente: você demonstra domínio e "
+            "constância ao longo do curso. Você se destaca especialmente em «{mejor}». "
+            "Continue assim, você está em um caminho excelente!",
+            "Muito bem, {nombre}! Você tem um desempenho sólido e equilibrado. Seu melhor "
+            "módulo foi «{mejor}». Com um pouco mais de prática nos temas que foram mais "
+            "difíceis, você vai chegar ao nível mais alto.",
+            "Bom trabalho, {nombre}! Você está construindo uma base firme. Você brilhou em "
+            "«{mejor}». Há uma boa oportunidade de melhorar reforçando «{peor}» "
+            "({peor_pct}%); com dedicação, você vai conseguir!",
+            "{nombre}, você está dando seus primeiros passos e cada avanço conta. Seu ponto "
+            "mais forte foi «{mejor}». Incentivamos você a reforçar os módulos com menor "
+            "avanço, principalmente «{peor}» ({peor_pct}%). Com prática e apoio, você vai "
+            "progredir muito!",
+        ),
     },
     "es": {
         "titulo": "REPORTE DE DESARROLLO",
@@ -91,7 +108,7 @@ UI = {
         "th_modulo": "Módulo", "th_tareas": "Tareas", "th_puntos": "Puntos", "th_avance": "Avance",
         "asis_titulo": "ASISTENCIA A CLASES", "est_pres": "Presente", "est_aus": "Ausente",
         "est_just": "Justif.", "msg": "MENSAJE PARA TI",
-        "firma": "FIRMA DEL TUTOR(A)", "sello": "SELLO KODLAND",
+        "tutor": "Tutor(a)",
         "datos": "DATOS BÁSICOS DEL ESTUDIANTE",
         "f_alumno": "Nombre del estudiante", "f_acu": "Nombre del acudiente",
         "f_mail": "E-mail", "f_tel": "Teléfono", "f_pais": "País de residencia",
@@ -112,6 +129,20 @@ UI = {
         ),
         "modo_pie": ("Al final del informe se incluye una valoración del proceso formativo de "
                      "{alumno}, destacando aspectos relevantes de su desempeño."),
+        "msg_textos": (
+            "¡Felicitaciones, {nombre}! Tu desempeño es excelente: demuestras dominio "
+            "y constancia a lo largo del curso. Destacas especialmente en «{mejor}». "
+            "¡Sigue así, vas por un camino sobresaliente!",
+            "¡Muy bien, {nombre}! Tienes un desempeño sólido y parejo. Tu mejor módulo "
+            "fue «{mejor}». Con un poco más de práctica en los temas que se te resistieron, "
+            "llegarás al nivel más alto.",
+            "¡Buen trabajo, {nombre}! Vas construyendo una base firme. Brillaste en "
+            "«{mejor}». Hay una buena oportunidad de mejorar reforzando «{peor}» "
+            "({peor_pct}%); ¡con dedicación lo vas a lograr!",
+            "{nombre}, estás dando tus primeros pasos y cada avance cuenta. Tu punto más "
+            "fuerte fue «{mejor}». Te animamos a reforzar los módulos con menor avance, "
+            "sobre todo «{peor}» ({peor_pct}%). ¡Con práctica y apoyo vas a progresar mucho!",
+        ),
     },
 }
 
@@ -124,25 +155,9 @@ def mensaje_desempeno(promedio, nombre, mods, pcts, ui):
     peor_i = min(idx, key=lambda i: pcts[i]) if idx else 0
     peor = mods[peor_i]["titulo"] if idx else ""
     peor_pct = pcts[peor_i] if idx else 0
-    if promedio >= 85:
-        base = (f"¡Felicitaciones, {nombre}! Tu desempeño es excelente: demuestras dominio "
-                f"y constancia a lo largo del curso. Destacas especialmente en «{mejor}». "
-                f"¡Sigue así, vas por un camino sobresaliente!")
-    elif promedio >= 70:
-        base = (f"¡Muy bien, {nombre}! Tienes un desempeño sólido y parejo. Tu mejor módulo "
-                f"fue «{mejor}». Con un poco más de práctica en los temas que se te resistieron, "
-                f"llegarás al nivel más alto.")
-    elif promedio >= 50:
-        base = (f"¡Buen trabajo, {nombre}! Vas construyendo una base firme. Brillaste en "
-                f"«{mejor}». Hay una buena oportunidad de mejorar reforzando «{peor}» "
-                f"({peor_pct}%); ¡con dedicación lo vas a lograr!")
-    else:
-        base = (f"{nombre}, estás dando tus primeros pasos y cada avance cuenta. Tu punto más "
-                f"fuerte fue «{mejor}». Te animamos a reforzar los módulos con menor avance, "
-                f"sobre todo «{peor}» ({peor_pct}%). ¡Con práctica y apoyo vas a progresar mucho!")
-    if ui.get("titulo", "").startswith("RELAT"):  # portugués
-        base = base.replace("¡", "").replace("Felicitaciones", "Parabéns")
-    return base
+    nivel = 0 if promedio >= 85 else 1 if promedio >= 70 else 2 if promedio >= 50 else 3
+    return (ui["msg_textos"][nivel].replace("{nombre}", str(nombre)).replace("{mejor}", mejor)
+            .replace("{peor}", peor).replace("{peor_pct}", str(peor_pct)))
 
 
 def banda(pct, ui):
@@ -162,9 +177,13 @@ def sustituir(texto, alumno):
     return (texto or "").replace("{alumno}", alumno)
 
 
-def banner_uri():
-    """Banner de Kodland como data URI (vacio si no esta el archivo)."""
-    ruta = os.path.join(DIR, "reportes", "img", "banner_kodland.png")
+def banner_uri(idioma="es"):
+    """Banner de Kodland como data URI (vacio si no esta el archivo). El texto
+    va dentro de la imagen: para otro idioma se usa banner_kodland_<idioma>.png
+    si existe."""
+    ruta = os.path.join(DIR, "reportes", "img", f"banner_kodland_{idioma}.png")
+    if not os.path.exists(ruta):
+        ruta = os.path.join(DIR, "reportes", "img", "banner_kodland.png")
     try:
         with open(ruta, "rb") as fh:
             return "data:image/png;base64," + base64.b64encode(fh.read()).decode("ascii")
@@ -328,20 +347,18 @@ table.calif tr.total td{font-weight:800; background:#fbfdf5; border-top:2px soli
 .ses.pres{background:#eef7d8;} .ses.pres .e{color:#5e7a1a;}
 .ses.aus{background:#fbe0e0;} .ses.aus .e{color:#a23434;}
 .ses.just{background:#fbecc9;} .ses.just .e{color:#8a5e10;}
-.firmas{display:flex; justify-content:space-around; align-items:flex-end; gap:30px; margin:22px 0 18px; padding:0 10px;}
-.col-firma{flex:1; max-width:300px; text-align:center;}
-.col-firma .linea{border-top:1.5px solid var(--oscuro); margin-top:30px;}
-.col-firma .fnombre{font-weight:800; font-size:13px; color:var(--oscuro); margin-top:6px;}
+.firmas{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin:26px 0 18px; padding:0 10px;}
+.col-tutor{text-align:left;}
+.col-tutor .fnombre{font-weight:800; font-size:13px; color:var(--oscuro);}
 .frol{font-size:8.5px; letter-spacing:.1em; color:#8a9078; font-weight:700; text-transform:uppercase; margin-top:3px;}
-.col-sello{text-align:center;}
-.sello-caja{width:108px; height:108px; margin:0 auto; border:2px dashed #c4c8b4; border-radius:50%;
-  display:flex; align-items:center; justify-content:center; color:#bcc0ac; font-size:9px;
-  letter-spacing:.08em; font-weight:700; text-transform:uppercase; text-align:center; line-height:1.3;}
+.copy{font-size:10px; color:#8a9078; font-weight:600;}
 """
 
 
 def build_html(curso, alumno, altos=None):
-    idioma = curso.get("idioma", "es")
+    # el idioma lo puede fijar el alumno (el de la página de quien genera el
+    # informe); si no, el del contenido del curso
+    idioma = alumno.get("idioma") or curso.get("idioma", "es")
     ui = UI.get(idioma, UI["es"])
     nombre = alumno["alumno"]
     pcts = alumno["pct"]
@@ -407,7 +424,7 @@ def build_html(curso, alumno, altos=None):
     obj = curso.get("objetivo_informe") or ui["objetivo_def"]
     obj = sustituir(obj, nombre).replace("{curso}", curso.get("curso", ""))
     items = "".join(f"<li><b>{esc(t)}</b> — {esc(x)}</li>" for t, x in ui["modo_items"])
-    ban = banner_uri()
+    ban = banner_uri(idioma)
 
     caratula = f"""
 <div class="pagina">
@@ -603,14 +620,11 @@ def build_html(curso, alumno, altos=None):
   </div>
 
   <div class="firmas">
-    <div class="col-firma">
-      <div class="linea"></div>
+    <div class="col-tutor">
       <div class="fnombre">{esc(alumno.get('profesor','')) or '&nbsp;'}</div>
-      <div class="frol">{ui['firma']}</div>
+      <div class="frol">{ui['tutor']}</div>
     </div>
-    <div class="col-sello">
-      <div class="sello-caja">{ui['sello']}</div>
-    </div>
+    <div class="copy">© Kodland, {datetime.date.today().year}</div>
   </div>
 
   <div class="pie">

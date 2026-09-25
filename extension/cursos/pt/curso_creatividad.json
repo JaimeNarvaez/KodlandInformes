@@ -1,0 +1,141 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_creatividad.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Criatividade Digital (Nível 1)",
+  "idioma": "pt",
+  "area_interes": "Arte e Animação Digital",
+  "proximo_nivel": "Criatividade Digital 2",
+  "vision_general": "Ao longo do Criatividade Digital, {alumno} percorreu uma jornada criativa desenhando ilustrações, criando personagens e produzindo seus próprios desenhos animados. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "De um Desenho ao seu Primeiro Desenho Animado",
+      "descripcion": "{alumno} criou e animou suas primeiras ilustrações em Pixel Art.",
+      "aprendizajes": [
+        "O mundo dos pixels",
+        "Criação de um personagem em pixels",
+        "Animação do personagem",
+        "Criação de ajudantes"
+      ],
+      "proyecto": "Ilustração em Pixel Art animada"
+    },
+    {
+      "numero": 2,
+      "titulo": "Desenhar com o Mouse",
+      "descripcion": "{alumno} conheceu um aplicativo de desenho digital e suas ferramentas.",
+      "aprendizajes": [
+        "Explorar o programa de desenho (Kleki)",
+        "Como funcionam as camadas",
+        "A importância da cor",
+        "Criação de um cartão"
+      ],
+      "proyecto": "Cartão digital"
+    },
+    {
+      "numero": 3,
+      "titulo": "Vamos Soltar a Imaginação!",
+      "descripcion": "{alumno} desenvolveu sua criatividade gerando ideias únicas.",
+      "aprendizajes": [
+        "Além das formas simples",
+        "Reconhecer personagens em formas",
+        "Usar fotos como base para um desenho",
+        "Desenhar música e criar uma melodia"
+      ],
+      "proyecto": "Desenhos criativos e música"
+    },
+    {
+      "numero": 4,
+      "titulo": "Design de Personagens",
+      "descripcion": "{alumno} aprendeu a conceber e desenhar seus próprios personagens.",
+      "aprendizajes": [
+        "Escolher a pose e fazer o esboço",
+        "Trabalhar com cores e formas",
+        "Adicionar detalhes"
+      ],
+      "proyecto": "Personagem próprio"
+    },
+    {
+      "numero": 5,
+      "titulo": "Fundamentos da Modelagem 3D",
+      "descripcion": "{alumno} deu seus primeiros passos no espaço tridimensional.",
+      "aprendizajes": [
+        "Introdução ao espaço 3D",
+        "Modelagem de um barco de fantasia",
+        "Modelagem de um personagem"
+      ],
+      "proyecto": "Modelo 3D próprio"
+    },
+    {
+      "numero": 6,
+      "titulo": "Como se Cria uma História? Quadrinhos",
+      "descripcion": "{alumno} aprendeu a contar histórias por meio de quadrinhos.",
+      "aprendizajes": [
+        "Regras da narrativa",
+        "Roteiros visuais (storyboards)",
+        "Criação de quadros de quadrinhos",
+        "Montar uma página e criar a capa"
+      ],
+      "proyecto": "História em quadrinhos própria"
+    },
+    {
+      "numero": 7,
+      "titulo": "Animação Quadro a Quadro",
+      "descripcion": "{alumno} criou seu primeiro personagem animado quadro a quadro.",
+      "aprendizajes": [
+        "Introdução à animação quadro a quadro (FlipAnim)",
+        "Animar o clima",
+        "Preparar um personagem para animar",
+        "Animar o personagem"
+      ],
+      "proyecto": "Personagem animado"
+    },
+    {
+      "numero": 8,
+      "titulo": "Animações com Quadros-chave",
+      "descripcion": "{alumno} aprendeu a animar com quadros-chave criando um desenho animado.",
+      "aprendizajes": [
+        "Animação de movimentos simples",
+        "Animação de rotação e tamanho",
+        "Criação de um desenho animado"
+      ],
+      "proyecto": "Desenho animado com quadros-chave"
+    },
+    {
+      "numero": 9,
+      "titulo": "Edição de Desenhos Animados",
+      "descripcion": "{alumno} conheceu a edição de vídeo para dar vida às suas histórias.",
+      "aprendizajes": [
+        "Contar uma história por meio da edição",
+        "Edição de um desenho animado (123Apps)",
+        "Tela de título, narração e música"
+      ],
+      "proyecto": "Desenho animado editado com áudio"
+    },
+    {
+      "numero": 10,
+      "titulo": "Projeto de Formatura",
+      "descripcion": "Na etapa final, {alumno} criou um desenho animado completo do início ao fim.",
+      "aprendizajes": [
+        "História e storyboard",
+        "Desenho de cenários e ambientes",
+        "Trabalho de animação",
+        "Edição, narração e apresentação"
+      ],
+      "proyecto": "Desenho animado completo (apresentado)"
+    }
+  ],
+  "consideraciones": "Durante o Criatividade Digital, {alumno} explorou múltiplas formas de arte digital — ilustração, design de personagens, 3D, quadrinhos e animação —, desenvolvendo sua criatividade e expressão. As competências trabalhadas foram:",
+  "competencias": [
+    "Ilustração digital e Pixel Art",
+    "Uso de camadas e cor",
+    "Design de personagens",
+    "Modelagem 3D básica",
+    "Narrativa visual e quadrinhos",
+    "Animação (quadro a quadro e quadros-chave)",
+    "Edição de vídeo",
+    "Criatividade e expressão"
+  ],
+  "proximo_paso": {
+    "titulo": "Criatividade Digital 2",
+    "texto": "Considerando o talento criativo de {alumno}, o próximo passo recomendado é o Criatividade Digital 2, onde aprofundará a ilustração, a animação e a criação de projetos mais ambiciosos."
+  }
+}

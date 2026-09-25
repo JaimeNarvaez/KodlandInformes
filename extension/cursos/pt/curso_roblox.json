@@ -1,0 +1,152 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_roblox.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Desenvolvedor de Jogos Roblox (Nível 1)",
+  "idioma": "pt",
+  "area_interes": "Criação de Jogos",
+  "proximo_nivel": "Roblox 2",
+  "vision_general": "Ao longo do curso de Roblox, {alumno} percorreu uma jornada de aprendizagem da introdução ao Roblox Studio até a publicação dos seus próprios jogos. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Space Travellers: Conhecendo o Roblox",
+      "descripcion": "{alumno} conheceu o Roblox Studio e criou seu primeiro jogo do zero.",
+      "aprendizajes": [
+        "Interface do Roblox Studio e ferramentas de escala/rotação",
+        "Uso da Caixa de Ferramentas (Toolbox)",
+        "Edição de terreno com o Gerador de Terreno",
+        "Modelos 3D com blocos, cor e material",
+        "Primeiro contato com scripts e publicação do jogo"
+      ],
+      "proyecto": "Jogo 'Space Travellers'"
+    },
+    {
+      "numero": 2,
+      "titulo": "Tower of Hell: Primeiro Projeto",
+      "descripcion": "{alumno} deu seus primeiros passos programando em LUA e trabalhou com a física do Roblox.",
+      "aprendizajes": [
+        "Fundamentos da programação em LUA",
+        "Scripts para alterar parâmetros de objetos",
+        "Física do Roblox Studio e motores",
+        "Criação de obstáculos",
+        "Controle da vida do jogador"
+      ],
+      "proyecto": "Tower of Hell (parte 1)"
+    },
+    {
+      "numero": 3,
+      "titulo": "Tower of Hell: Ampliação",
+      "descripcion": "{alumno} ampliou seu projeto com objetos animados, interação e checkpoints.",
+      "aprendizajes": [
+        "Obstáculos avançados com scripts",
+        "Objetos em movimento e animados",
+        "Objetos interativos e Surface GUI",
+        "Pontos de controle (checkpoints) e impulsionadores",
+        "Parkour com limite de tempo e publicação"
+      ],
+      "proyecto": "Tower of Hell (parte 2, publicado)"
+    },
+    {
+      "numero": 4,
+      "titulo": "Jogo de Corrida",
+      "descripcion": "{alumno} projetou um jogo de corrida completo, com carro, física e efeitos.",
+      "aprendizajes": [
+        "Fundamentos do design de jogos",
+        "Criação de pistas de corrida",
+        "Modelagem do carro e sua física",
+        "Efeitos visuais e interface de usuário",
+        "Ponto de renascimento e corrida cronometrada"
+      ],
+      "proyecto": "Jogo de corrida"
+    },
+    {
+      "numero": 5,
+      "titulo": "Jogo de Aventura: Desenvolvimento em Equipe",
+      "descripcion": "{alumno} trabalhou em equipe criando um mundo com personagens e missões.",
+      "aprendizajes": [
+        "Desenvolvimento colaborativo de mundos",
+        "Criação e personalização de NPCs",
+        "Animações de personagens",
+        "Diálogos de NPCs",
+        "Criação de minimissões"
+      ],
+      "proyecto": "Jogo de aventura (parte 1)"
+    },
+    {
+      "numero": 6,
+      "titulo": "Jogo de Aventura: Sistema de Moedas",
+      "descripcion": "{alumno} incorporou uma economia ao jogo: moeda, coleta e loja.",
+      "aprendizajes": [
+        "Criação de uma moeda no jogo",
+        "Minérios e ferramentas de coleta",
+        "Sistema de GUI do Roblox",
+        "Criação de uma loja dentro do jogo",
+        "Ambientação e troca de moedas"
+      ],
+      "proyecto": "Jogo de aventura (parte 2)"
+    },
+    {
+      "numero": 7,
+      "titulo": "Jogo de Aventura: Monetização",
+      "descripcion": "{alumno} conheceu os sistemas de monetização e conquistas do Roblox.",
+      "aprendizajes": [
+        "Emblemas e conquistas",
+        "Passes de jogo (Game Pass) e mascotes",
+        "Fundamentos da monetização",
+        "Itens à venda e servidores privados",
+        "Configuração final do jogo"
+      ],
+      "proyecto": "Jogo de aventura (final, publicado)"
+    },
+    {
+      "numero": 8,
+      "titulo": "O Chão é Lava: Variáveis e Funções",
+      "descripcion": "{alumno} aprofundou-se na lógica de programação com variáveis e funções.",
+      "aprendizajes": [
+        "Uso de variáveis em LUA",
+        "Criação e uso de funções",
+        "Leitura e adaptação de scripts prontos",
+        "A lógica por trás do código"
+      ],
+      "proyecto": "O chão é lava"
+    },
+    {
+      "numero": 9,
+      "titulo": "Contorne o Obstáculo: Condicionais e Laços",
+      "descripcion": "{alumno} trabalhou estruturas fundamentais para qualquer programador.",
+      "aprendizajes": [
+        "Estruturas condicionais (if/else)",
+        "Laço for",
+        "Automação com scripts",
+        "Ampliação das funções do jogo"
+      ],
+      "proyecto": "Minijogo 'Contorne o obstáculo'"
+    },
+    {
+      "numero": 10,
+      "titulo": "Projeto Final e Formatura",
+      "descripcion": "Na etapa final, {alumno} criou e apresentou seu próprio jogo original.",
+      "aprendizajes": [
+        "Documento conceitual do jogo",
+        "Criação de mecânicas próprias",
+        "Integração de várias mecânicas aprendidas",
+        "Teste final e apresentação"
+      ],
+      "proyecto": "Projeto de formatura próprio"
+    }
+  ],
+  "consideraciones": "Durante sua passagem pelo Roblox, {alumno} trabalhou importantes conceitos técnicos e criativos, consolidando uma base sólida no desenvolvimento de jogos. As competências trabalhadas foram:",
+  "competencias": [
+    "Design de jogos",
+    "Modelagem 3D",
+    "Programação em LUA",
+    "Lógica de programação (variáveis, funções, condicionais, laços)",
+    "Interface de usuário (GUI)",
+    "Sistemas de economia e monetização",
+    "Desenvolvimento de projetos completos",
+    "Resolução de problemas e pensamento computacional"
+  ],
+  "proximo_paso": {
+    "titulo": "Roblox 2",
+    "texto": "Considerando o interesse de {alumno} pela criação de jogos, o próximo passo recomendado é o Roblox 2, onde aprofundará a programação em LUA e criará jogos mais complexos e completos."
+  }
+}

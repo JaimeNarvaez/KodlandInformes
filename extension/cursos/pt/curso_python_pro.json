@@ -1,0 +1,145 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_python_pro.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Python Pro",
+  "idioma": "pt",
+  "area_interes": "Desenvolvimento de Software e Inteligência Artificial",
+  "proximo_nivel": "Projetos profissionais e portfólio",
+  "vision_general": "Ao longo do Python Pro, {alumno} levou sua programação a um nível avançado: criou bots, aplicações web com bancos de dados, modelos de inteligência artificial e participou de um hackathon. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Ferramentas Profissionais e Bot do Discord",
+      "descripcion": "{alumno} configurou um ambiente profissional e começou a criar um bot do Discord.",
+      "aprendizajes": [
+        "Configuração de uma IDE e revisão de Python",
+        "Controle de versões com git e GitHub",
+        "APIs e a biblioteca discord.py",
+        "Programação orientada a objetos"
+      ],
+      "proyecto": "Bot do Discord (início)"
+    },
+    {
+      "numero": 2,
+      "titulo": "Dos Arquivos à Web",
+      "descripcion": "{alumno} concluiu o bot e deu seus primeiros passos no desenvolvimento web.",
+      "aprendizajes": [
+        "Trabalho com arquivos e pastas",
+        "Testes e depuração",
+        "Fundamentos de HTML",
+        "Estilos com CSS e classes"
+      ],
+      "proyecto": "Primeiras páginas web (HTML/CSS)"
+    },
+    {
+      "numero": 3,
+      "titulo": "Desenvolvimento Web com Flask",
+      "descripcion": "{alumno} criou aplicações web dinâmicas com Flask.",
+      "aprendizajes": [
+        "Flask e ambientes virtuais",
+        "Templates Jinja",
+        "Rotas e formulários",
+        "Páginas com elementos interativos"
+      ],
+      "proyecto": "Aplicação web com Flask"
+    },
+    {
+      "numero": 4,
+      "titulo": "Bancos de Dados e Publicação",
+      "descripcion": "{alumno} adicionou bancos de dados e publicou seu site.",
+      "aprendizajes": [
+        "Bancos de dados",
+        "Autenticação de usuários",
+        "Publicação do site (PythonAnywhere)",
+        "Site de portfólio"
+      ],
+      "proyecto": "Site com banco de dados (portfólio)"
+    },
+    {
+      "numero": 5,
+      "titulo": "Introdução à IA e aos Dados",
+      "descripcion": "{alumno} mergulhou na inteligência artificial e na análise de dados.",
+      "aprendizajes": [
+        "Introdução à IA e ao aprendizado de máquina",
+        "Google Colab",
+        "Extração, limpeza e análise de dados",
+        "Primeiro contato com a visão computacional"
+      ],
+      "proyecto": "Primeira análise de dados com IA"
+    },
+    {
+      "numero": 6,
+      "titulo": "Visão Computacional",
+      "descripcion": "{alumno} treinou modelos de visão computacional.",
+      "aprendizajes": [
+        "Uso de modelos treinados por meio de código",
+        "Treinamento com o Teachable Machine",
+        "Detecção de objetos (ImageAI, YOLO)",
+        "Design de uma solução própria"
+      ],
+      "proyecto": "Modelo de IA próprio (visão computacional)"
+    },
+    {
+      "numero": 7,
+      "titulo": "Integração de IA em Aplicações",
+      "descripcion": "{alumno} integrou modelos de IA a um projeto real, de forma estável.",
+      "aprendizajes": [
+        "Configuração do ambiente do projeto",
+        "Seleção e treinamento do modelo",
+        "Integração de módulos sem quebrar o projeto",
+        "Testes e coleta de feedback"
+      ],
+      "proyecto": "Aplicação com IA integrada"
+    },
+    {
+      "numero": 8,
+      "titulo": "Gestão de Projetos e Colaboração",
+      "descripcion": "{alumno} aprendeu a trabalhar em equipe com metodologias profissionais.",
+      "aprendizajes": [
+        "Metodologias Agile e Scrum",
+        "Controle de versões em equipe",
+        "Revisões de código e boas práticas",
+        "Ferramentas de colaboração remota"
+      ],
+      "proyecto": "Trabalho em equipe com Agile/Scrum"
+    },
+    {
+      "numero": 9,
+      "titulo": "Voz em Python e Código Limpo",
+      "descripcion": "{alumno} trabalhou com síntese de voz e aprendeu a escrever código limpo.",
+      "aprendizajes": [
+        "Síntese de voz em Python",
+        "Bot que informa a previsão do tempo",
+        "Bot que conta curiosidades",
+        "Código limpo e refatoração"
+      ],
+      "proyecto": "Bot com síntese de voz"
+    },
+    {
+      "numero": 10,
+      "titulo": "Hackathon Final",
+      "descripcion": "Na etapa final, {alumno} resolveu de forma autônoma um problema real em um hackathon.",
+      "aprendizajes": [
+        "Análise, planejamento e design da solução",
+        "Desenvolvimento da solução",
+        "Testes e depuração",
+        "Apresentação do projeto"
+      ],
+      "proyecto": "Solução para o aquecimento global (hackathon)"
+    }
+  ],
+  "consideraciones": "Durante o Python Pro, {alumno} consolidou um perfil de desenvolvedor avançado, capaz de criar software real do início ao fim e incorporar inteligência artificial. As competências trabalhadas foram:",
+  "competencias": [
+    "Controle de versões (git e GitHub)",
+    "Programação orientada a objetos",
+    "APIs e bibliotecas externas",
+    "Desenvolvimento web com Flask",
+    "Bancos de dados",
+    "Inteligência artificial e machine learning",
+    "Visão computacional",
+    "Metodologias Agile/Scrum e código limpo"
+  ],
+  "proximo_paso": {
+    "titulo": "Projetos profissionais e portfólio",
+    "texto": "{alumno} domina um conjunto completo de desenvolvimento e inteligência artificial. O próximo passo recomendado é aplicar essas habilidades em projetos pessoais e na construção de um portfólio profissional que abra portas para áreas como o desenvolvimento de software, a ciência de dados ou a IA."
+  }
+}

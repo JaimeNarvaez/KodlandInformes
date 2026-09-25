@@ -179,6 +179,13 @@ JS_SIGUIENTE = r"""
 def ahora():
     return dt.datetime.now().strftime("%H:%M:%S")
 
+# que un símbolo (✓, ✗, tildes) nunca tumbe el proceso si la consola no es UTF-8
+for _flujo in (sys.stdout, sys.stderr):
+    try:
+        _flujo.reconfigure(errors="replace")
+    except Exception:
+        pass
+
 def log(msg):
     print(f"[{ahora()}] {msg}", flush=True)
 
@@ -699,8 +706,29 @@ def _primer_valor(dic, claves, _hondo=0):
                 return r
     return ""
 
-DIAS = {1: "Lunes", 2: "Martes", 3: "Miércoles", 4: "Jueves", 5: "Viernes",
-        6: "Sábado", 7: "Domingo"}
+DIAS = {
+    "es": {1: "Lunes", 2: "Martes", 3: "Miércoles", 4: "Jueves", 5: "Viernes",
+           6: "Sábado", 7: "Domingo"},
+    "pt": {1: "Segunda-feira", 2: "Terça-feira", 3: "Quarta-feira", 4: "Quinta-feira",
+           5: "Sexta-feira", 6: "Sábado", 7: "Domingo"},
+}
+IDIOMAS = tuple(DIAS)   # idiomas en que se sabe hacer el informe
+
+def idioma_informe(valor):
+    """Idioma del informe a partir del de la página ("pt-BR", "es-ES", la cookie
+    materio-language del backoffice). Lo que no se sepa hacer, en español."""
+    corto = str(valor or "").strip().lower()[:2]
+    return corto if corto in IDIOMAS else "es"
+
+def idioma_de_sesion(ctx):
+    """Idioma elegido en el backoffice, leído de su cookie materio-language."""
+    try:
+        for c in ctx.cookies("https://bo.kodland.org"):
+            if c.get("name") == "materio-language":
+                return idioma_informe(c.get("value"))
+    except Exception:
+        pass
+    return "es"
 
 def _tipo_grupo(info_grupo):
     """group_kind.title viene como "[8] Grupo regular, 14 estudiantes, 90
@@ -712,20 +740,21 @@ def _tipo_grupo(info_grupo):
         tipo += " (premium)"
     return tipo
 
-def _dia_hora(info_grupo):
+def _dia_hora(info_grupo, idioma="es"):
     """group_schedule es [{"day": 2, "time": "16:00", …}] con day 1 = lunes (el
     código COL…_MA-16 lo confirma), en la zona horaria del grupo."""
     horario = info_grupo.get("group_schedule")
     if not isinstance(horario, list):
         return ""
-    partes = [f"{DIAS.get(h.get('day'), '')} {h.get('time') or ''}".strip()
+    dias = DIAS.get(idioma, DIAS["es"])
+    partes = [f"{dias.get(h.get('day'), '')} {h.get('time') or ''}".strip()
               for h in horario if isinstance(h, dict)]
-    texto = " y ".join(p for p in partes if p)
+    texto = (" e " if idioma == "pt" else " y ").join(p for p in partes if p)
     zona = info_grupo.get("group_timezone")
     offset = zona.get("offset_utc") if isinstance(zona, dict) else ""
     return f"{texto} ({offset})" if texto and offset else texto
 
-def datos_caratula(main, info_grupo, respaldo, nombre, codigo, info_alumno=None):
+def datos_caratula(main, info_grupo, respaldo, nombre, codigo, info_alumno=None, idioma="es"):
     """Datos básicos del estudiante para la carátula del reporte.
 
     La familia (acudiente, teléfono, país) no viene en la lista de alumnos del
@@ -748,7 +777,7 @@ def datos_caratula(main, info_grupo, respaldo, nombre, codigo, info_alumno=None)
             main, ("country", "country_name")),
         "codigo_grupo": codigo,
         "tipo_grupo": _tipo_grupo(info_grupo),
-        "dia_hora": _dia_hora(info_grupo),
+        "dia_hora": _dia_hora(info_grupo, idioma),
     }
     manual = dict(respaldo.get("_grupo", {}) or {})
     manual.update(respaldo.get(nombre, {}) or {})
@@ -846,7 +875,11 @@ def grupos_desde_ficha(ctx, page, sid):
 
 def grupos_de_lista(lista):
     """Convierte la respuesta de /students/<ID>/backoffice_groups/ en los
-    grupos que espera generar_reportes_grupo."""
+    grupos que espera generar_reportes_grupo.
+
+    Solo los grupos en que el alumno sigue activo: `status` es el suyo en ese
+    grupo, y los de cursos ya terminados o de los que salió vienen como
+    "expelled" (o similar). Esos no llevan informe."""
     grupos = []
     for g in lista if isinstance(lista, list) else []:
         gid = g.get("group_id") if isinstance(g, dict) else None
@@ -854,11 +887,15 @@ def grupos_de_lista(lista):
             continue
         codigo = str(g.get("group_title") or f"grupo_{gid}").strip()
         curso = re.sub(r"^\[\d+\]", "", g.get("course_title") or "").split("[")[0].strip()
-        log(f" · {codigo}: {curso or 'curso ¿?'} (grupo {g.get('status') or '¿?'})")
+        estado = str(g.get("status") or "").lower()
+        if estado != "active":
+            log(f" · {codigo}: {curso or 'curso ¿?'} → se omite (el alumno figura como «{estado or '¿?'}»)")
+            continue
+        log(f" · {codigo}: {curso or 'curso ¿?'}")
         grupos.append({"codigo": codigo, "url": f"{BASE}/groups/{gid}"})
     return grupos
 
-def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
+def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None, idioma="es"):
     """Genera un 'Reporte de desarrollo' (PDF narrativo por módulo) por cada
     alumno inscrito del grupo, con % reales. Necesita reportes/curso_<slug>.json
     con el contenido del curso (ver curso.example.json). No califica.
@@ -866,8 +903,13 @@ def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
     ID si es un número o la URL de su ficha.
 
     `api(ruta) -> {"status", "cuerpo"}` es de dónde salen los datos: por
-    defecto, llamadas en vivo desde las páginas de `ctx`; con un paquete de la
-    extensión, sus respuestas ya reunidas (y entonces ctx y page sobran)."""
+    defecto, llamadas en vivo desde las páginas de `ctx`. Se puede pasar otra
+    (respuestas ya guardadas, y entonces ctx y page sobran): así lo usa
+    pruebas/comparar_generadores.py para cotejar con la extensión.
+
+    `idioma` es el del informe ("es" o "pt"). El contenido del curso en otro
+    idioma va en reportes/<idioma>/ con el mismo nombre de archivo; si falta,
+    el informe sale entero en español para no mezclar idiomas."""
     sys.path.insert(0, str(DIR_BASE))
     import generar_reporte as grep
     import glob as _glob
@@ -900,6 +942,9 @@ def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
         log(f"   el grupo aún no ha empezado"
             f"{' (primera clase el ' + inicio + ')' if inicio else ''}: no hay informe que hacer")
         return 0
+    if info_grupo.get("group_graduated") or info_grupo.get("group_is_archive"):
+        log("   el grupo ya terminó: no hay informe que hacer")
+        return 0
 
     # buscar el JSON de contenido del curso: todas las palabras del slug deben
     # aparecer en el título del curso; si varios encajan, gana el más específico
@@ -923,8 +968,16 @@ def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
         log(f"   no hay contenido para el curso «{titulo}». Crea "
             f"reportes/curso_<curso>.json (ver curso.example.json) y reintenta.")
         return 0
+    if idioma != "es":
+        traducido = DIR_BASE / "reportes" / idioma / Path(ruta_curso).name
+        if traducido.exists():
+            ruta_curso = str(traducido)
+        else:
+            log(f"   no hay reportes/{idioma}/{Path(ruta_curso).name}: el informe sale en español")
+            idioma = "es"
     curso = json.loads(Path(ruta_curso).read_text(encoding="utf-8"))
-    log(f"   curso: {curso.get('curso')} (contenido: {Path(ruta_curso).name})")
+    log(f"   curso: {curso.get('curso')} (contenido: {Path(ruta_curso).relative_to(DIR_BASE / 'reportes')}, "
+        f"idioma {idioma})")
 
     r = api(f"/student_groups/{gid}/get_students_main_data")
     if r.get("status") != 200 or not isinstance(r.get("cuerpo"), list):
@@ -1029,10 +1082,10 @@ def generar_reportes_grupo(ctx, page, grupo, pw, alumno="", api=None):
                 tareas.append((env, tot))
             asis = {"asistidas": sum(1 for x in ses if x["estado"] == "presente"),
                     "total": len(ses), "sesiones": ses}
-            alumno = {"alumno": nombre, "profesor": prof, "pct": pct,
+            alumno = {"alumno": nombre, "profesor": prof, "pct": pct, "idioma": idioma,
                       "puntos": puntos, "tareas": tareas, "asistencia": asis,
                       "datos": datos_caratula(main, info_grupo, respaldo, nombre, codigo,
-                                              info_alumno)}
+                                              info_alumno, idioma)}
             html = grep.build_html(curso, alumno)
             base = "".join(ch for ch in nombre if ch.isalnum() or ch in " _-").strip() or "alumno"
             rpage.set_content(html, wait_until="networkidle")

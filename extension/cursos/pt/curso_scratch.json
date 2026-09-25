@@ -1,0 +1,122 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_scratch.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "A Magia do Código com Scratch",
+  "idioma": "pt",
+  "area_interes": "Criação de Jogos e Animação",
+  "proximo_nivel": "Python 1",
+  "vision_general": "Ao longo de A Magia do Código com Scratch, {alumno} percorreu uma jornada de aprendizagem criando seus primeiros jogos, animações e histórias interativas com programação em blocos. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Primeiros Projetos no Scratch",
+      "descripcion": "{alumno} conheceu o Scratch e criou seus primeiros projetos.",
+      "aprendizajes": [
+        "Fundamentos do Scratch e o primeiro projeto",
+        "Movimento de sprites",
+        "Editor de gráficos e criação de personagens",
+        "Depuração: o que é um erro"
+      ],
+      "proyecto": "Primeiros projetos no Scratch"
+    },
+    {
+      "numero": 2,
+      "titulo": "Animação e Sons",
+      "descripcion": "{alumno} deu vida aos seus projetos com animação, cenários e música.",
+      "aprendizajes": [
+        "Eventos no Scratch",
+        "Princípios de animação",
+        "Cenários e música",
+        "Criação de uma banda de música"
+      ],
+      "proyecto": "Aplicativo de música animado"
+    },
+    {
+      "numero": 3,
+      "titulo": "A Magia de Criar Jogos",
+      "descripcion": "{alumno} criou seu primeiro jogo completo com pontuação e interações.",
+      "aprendizajes": [
+        "O que é um jogo e como começar",
+        "Variáveis para marcar a pontuação",
+        "Interações no jogo",
+        "Níveis de dificuldade e bônus",
+        "Criação de um jogo de quebra-cabeça"
+      ],
+      "proyecto": "Jogo completo com mecânica básica"
+    },
+    {
+      "numero": 4,
+      "titulo": "A Narrativa nos Jogos",
+      "descripcion": "{alumno} aprendeu a contar histórias por meio dos seus jogos.",
+      "aprendizajes": [
+        "Mecânicas de jogo",
+        "Diálogos e texto nos jogos",
+        "Blocos personalizados",
+        "Desenvolvimento do roteiro",
+        "Criação de personagens e cenas"
+      ],
+      "proyecto": "Jogo baseado em uma história"
+    },
+    {
+      "numero": 5,
+      "titulo": "Scratch Avançado",
+      "descripcion": "{alumno} explorou funções avançadas do Scratch.",
+      "aprendizajes": [
+        "Extensões no Scratch",
+        "Reconhecimento de vídeo",
+        "Criação de clones",
+        "Planejamento do programa e depuração"
+      ],
+      "proyecto": "Projetos com recursos avançados"
+    },
+    {
+      "numero": 6,
+      "titulo": "Uma Viagem ao Mundo dos Videogames",
+      "descripcion": "{alumno} criou vários jogos com designs únicos.",
+      "aprendizajes": [
+        "Criação de um bichinho virtual",
+        "Otimização e velocidade no Scratch",
+        "Um jogo ambientado no passado",
+        "Proteção dos aplicativos"
+      ],
+      "proyecto": "Quatro jogos com design próprio"
+    },
+    {
+      "numero": 7,
+      "titulo": "Histórias Interativas",
+      "descripcion": "{alumno} criou histórias em que o jogador toma decisões.",
+      "aprendizajes": [
+        "Introdução à narrativa interativa",
+        "Personagens e diálogos",
+        "Decisões e ramificações",
+        "Desenvolvimento de uma história interativa"
+      ],
+      "proyecto": "História interativa própria"
+    },
+    {
+      "numero": 8,
+      "titulo": "Hackathon e Formatura",
+      "descripcion": "Na etapa final, {alumno} planejou, desenvolveu e apresentou seu projeto de formatura.",
+      "aprendizajes": [
+        "Planejamento de um bom projeto",
+        "Desenvolvimento do projeto final",
+        "Testes e feedback",
+        "Apresentação bem-sucedida"
+      ],
+      "proyecto": "Projeto de formatura próprio"
+    }
+  ],
+  "consideraciones": "Durante o curso de Scratch, {alumno} deu seus primeiros passos na programação criando jogos, animações e histórias, desenvolvendo o pensamento computacional de forma criativa. As competências trabalhadas foram:",
+  "competencias": [
+    "Programação em blocos",
+    "Animação e som",
+    "Variáveis e pontuação",
+    "Mecânicas de jogo",
+    "Narrativa interativa",
+    "Depuração de erros",
+    "Criatividade e pensamento computacional"
+  ],
+  "proximo_paso": {
+    "titulo": "Python 1",
+    "texto": "Considerando o entusiasmo de {alumno} por criar jogos e histórias, o próximo passo recomendado é dar o salto para a programação em texto com Python 1, onde levará suas ideias a projetos mais ambiciosos."
+  }
+}

@@ -17,16 +17,12 @@ Uso:
   py -3 informes.py --alumno 1346293      # por su ID (o la URL de su ficha): un PDF
                                           # por cada grupo en que esté inscrito
   py -3 informes.py --grupo COL12429 --alumno Juan   # un alumno de un grupo concreto
-  py -3 informes.py --paquete registros/paquete_1346293.json
-      # datos ya reunidos por la extensión en el Chrome de quien la usa: no
-      # abre navegador visible ni pide iniciar sesión (así lo usa ventas / ISM)
 """
 
 import argparse
 import json
 import os
 import sys
-from pathlib import Path
 
 import kodland_datos as kd
 from kodland_datos import (dump_debug, esperar_sesion, guardar_sesion, instalar_captura,
@@ -83,80 +79,6 @@ def elegir_grupos(page, args):
     return elegidos
 
 
-class PlaywrightPerezoso:
-    """Arranca Playwright solo si de verdad hay que hacer un PDF: arrancarlo y
-    cerrarlo en seguida (grupos sin empezar) deja avisos de asyncio."""
-    def __init__(self):
-        self._pw = None
-
-    @property
-    def chromium(self):
-        if self._pw is None:
-            self._pw = sync_playwright().start()
-        return self._pw.chromium
-
-    def cerrar(self):
-        if self._pw is not None:
-            self._pw.stop()
-
-
-def desde_paquete(ruta):
-    """Genera los informes de un alumno con las respuestas de la API que reunió
-    la extensión en la sesión de Chrome de quien la usa. Aquí no hay login ni
-    navegador visible: solo un Chromium oculto para convertir a PDF.
-
-    El paquete lleva datos de un menor: se borra al terminar."""
-    ruta = Path(ruta)
-    try:
-        paquete = json.loads(ruta.read_text(encoding="utf-8"))
-    except Exception as e:
-        print(f"No pude leer el paquete {ruta}: {e}")
-        sys.exit(1)
-    sid = str(paquete.get("alumno") or "")
-    respuestas = paquete.get("respuestas") or {}
-
-    def api(r):
-        return respuestas.get(r) or {"status": 404, "cuerpo": None}
-
-    hechos = 0
-    try:
-        log(f"Alumno {sid}: datos recibidos de la extensión ({len(respuestas)} consultas).")
-        lista = api(f"/students/{sid}/backoffice_groups/")
-        if lista.get("status") != 200:
-            log(f"No llegó la lista de grupos del alumno (status {lista.get('status')}). "
-                f"¿Tiene tu cuenta permiso para ver su ficha?")
-            return
-        grupos = kd.grupos_de_lista(lista.get("cuerpo"))
-        if not grupos:
-            log("El alumno no tiene grupos.")
-            return
-        print()
-        pw = PlaywrightPerezoso()
-        try:
-            for n, g in enumerate(grupos, 1):
-                log(f"[{n}/{len(grupos)}] Grupo {g['codigo']}")
-                try:
-                    hechos += kd.generar_reportes_grupo(None, None, g, pw, sid, api=api) or 0
-                except Exception as e:
-                    log(f"   error en el grupo {g['codigo']}: {e}")
-        finally:
-            pw.cerrar()
-        print()
-        log(f"Listo. Informes generados: {hechos}")
-    finally:
-        try:
-            ruta.unlink()
-        except Exception:
-            pass
-    if hechos:
-        salida = kd.DIR_BASE / "reportes" / "salida"
-        log(f"Están en: {salida}")
-        try:
-            os.startfile(str(salida))   # abrir la carpeta para quien no la conoce
-        except Exception:
-            pass
-
-
 def main():
     ap = argparse.ArgumentParser(description="Informes de desarrollo por alumno (Kodland)")
     ap.add_argument("--grupo", default="", help="código del grupo, o parte de él")
@@ -170,13 +92,9 @@ def main():
                     help="incluir también los grupos que no están Activos")
     ap.add_argument("--profesor-id", default="", help="tu ID de profesor (opcional: si falta, se detecta al iniciar sesión)")
     ap.add_argument("--lento", action="store_true", help="ir despacio, para ver qué hace")
-    ap.add_argument("--paquete", default="",
-                    help="JSON con los datos que reunió la extensión (no abre navegador)")
+    ap.add_argument("--idioma", default="", choices=["", *kd.IDIOMAS],
+                    help="idioma del informe (por defecto, el que tenga elegido la página)")
     args = ap.parse_args()
-
-    if args.paquete:
-        desde_paquete(args.paquete)
-        return
 
     # por ID de alumno no se usa el panel de tutor: el ID de profesor sobra
     if not kd.id_de_alumno(args.alumno):
@@ -236,12 +154,14 @@ def main():
             if not elegidos:
                 log("No quedó ningún grupo que procesar.")
                 return
-            log(f"Grupos a procesar: {len(elegidos)}")
+            idioma = args.idioma or kd.idioma_de_sesion(ctx)
+            log(f"Grupos a procesar: {len(elegidos)} (informes en {idioma})")
             print()
             for n, g in enumerate(elegidos, 1):
                 log(f"[{n}/{len(elegidos)}] Grupo {g['codigo']}")
                 try:
-                    hechos += kd.generar_reportes_grupo(ctx, page, g, pw, args.alumno) or 0
+                    hechos += kd.generar_reportes_grupo(ctx, page, g, pw, args.alumno,
+                                                      idioma=idioma) or 0
                 except Exception as e:
                     log(f"   error en el grupo {g['codigo']}: {e}")
             print()

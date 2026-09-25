@@ -1,0 +1,166 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_unity.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Unity 3D",
+  "idioma": "pt",
+  "area_interes": "Desenvolvimento de Jogos",
+  "proximo_nivel": "Python Pro",
+  "vision_general": "Ao longo do curso de Unity 3D, {alumno} percorreu uma jornada de aprendizagem que vai dos fundamentos do editor do Unity e da programação em C# até a publicação dos seus próprios jogos. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Fundamentos do Editor do Unity e Introdução ao C#",
+      "descripcion": "{alumno} conheceu o editor do Unity e deu seus primeiros passos programando em C#, criando seu primeiro personagem e cenário jogáveis.",
+      "aprendizajes": [
+        "Interface e janelas do Unity",
+        "Criação de um personagem e design do cenário",
+        "Introdução à linguagem C#",
+        "Física de movimento do jogador",
+        "Variáveis e funções básicas (Start/Update)",
+        "Condicionais if/else",
+        "Pulo e rotação do personagem",
+        "Sistema de câmera e animação do personagem"
+      ],
+      "proyecto": "Jogo tipo Runner: personagem, cenário e controles"
+    },
+    {
+      "numero": 2,
+      "titulo": "Jogo Runner: Geração de Níveis e Interface",
+      "descripcion": "{alumno} construiu um jogo runner completo com geração de níveis, interface de usuário, efeitos e sons.",
+      "aprendizajes": [
+        "Listas em C# e a função Instantiate",
+        "Gerador de níveis básico",
+        "Laços for e geração contínua de níveis",
+        "Fundamentos de interface de usuário (UI)",
+        "Objetos colecionáveis e condições de derrota",
+        "Efeitos visuais e sonoros",
+        "Mecânicas de bônus"
+      ],
+      "proyecto": "Jogo Runner com UI, efeitos e sons (publicado)"
+    },
+    {
+      "numero": 3,
+      "titulo": "Jogo de Tiro: Fundamentos e IA Básica",
+      "descripcion": "{alumno} desenvolveu seu primeiro FPS (jogo de tiro em primeira pessoa), com inimigos com IA básica e mecânicas de tiro.",
+      "aprendizajes": [
+        "Criação de um projeto do zero",
+        "Controles em primeira pessoa",
+        "Design de cenários",
+        "Modelos e animações de inimigos",
+        "IA simples que ataca o jogador",
+        "Sistemas de armas, tiro e munição",
+        "Prototipagem com assets e pontos de controle (checkpoints)"
+      ],
+      "proyecto": "Jogo de tiro em primeira pessoa (FPS)"
+    },
+    {
+      "numero": 4,
+      "titulo": "Shooter: Programação Orientada a Objetos",
+      "descripcion": "{alumno} aprofundou-se na programação orientada a objetos e concluiu seu jogo de tiro, publicando-o no Itch.io.",
+      "aprendizajes": [
+        "Introdução à POO (classes e objetos)",
+        "Herança e polimorfismo",
+        "Sobrescrita de métodos",
+        "Classes de personagens com propriedades únicas",
+        "Sons e efeitos visuais",
+        "Menu do jogo",
+        "Publicação no Itch.io"
+      ],
+      "proyecto": "Shooter completo com várias classes de personagem (publicado no Itch.io)"
+    },
+    {
+      "numero": 5,
+      "titulo": "Shooter Multijogador: Fundamentos com Photon",
+      "descripcion": "{alumno} aprendeu os fundamentos do desenvolvimento multijogador integrando o serviço Photon ao Unity.",
+      "aprendizajes": [
+        "Introdução ao desenvolvimento multijogador",
+        "O serviço Photon e sua integração com o Unity",
+        "Conexão ao Photon: criação e entrada em salas",
+        "Sincronização de ações e estados dos jogadores",
+        "Funções avançadas do Photon"
+      ],
+      "proyecto": "Shooter adaptado para multijogador com Photon"
+    },
+    {
+      "numero": 6,
+      "titulo": "Jogo de Plataforma 2D: Fundamentos",
+      "descripcion": "{alumno} deu o salto para o 2D, criando cenas, sprites, personagens animados e física em duas dimensões.",
+      "aprendizajes": [
+        "Introdução ao desenvolvimento 2D no Unity",
+        "Cenas 2D e sprites",
+        "Animação e controle de personagens",
+        "Objetos interativos e sistemas de interação",
+        "Física em um ambiente 2D"
+      ],
+      "proyecto": "Base de um jogo de plataforma 2D"
+    },
+    {
+      "numero": 7,
+      "titulo": "Jogo de Plataforma 2D: Nível Avançado",
+      "descripcion": "{alumno} aprimorou seu jogo de plataforma 2D, adicionando obstáculos, colecionáveis, interface, sistema de vidas e tela de vitória.",
+      "aprendizajes": [
+        "Aprimoramento do design de níveis 2D",
+        "Criação de obstáculos",
+        "Interação com objetos e colecionáveis",
+        "Interface de usuário e sistema de vidas/saúde",
+        "Nível final e tela de vitória"
+      ],
+      "proyecto": "Jogo de plataforma 2D concluído"
+    },
+    {
+      "numero": 8,
+      "titulo": "Shooter Multijogador: Funções Avançadas do Photon",
+      "descripcion": "{alumno} ampliou os recursos multijogador com IA, bônus, matchmaking e lobbies, e publicou o jogo no Itch.io.",
+      "aprendizajes": [
+        "IA de inimigos no multijogador",
+        "Bônus e sistema de pontuação",
+        "Otimização de áudio e desempenho",
+        "Matchmaking e lobbies",
+        "Gestão de dados em tempo de execução",
+        "Publicação e partidas em grupo"
+      ],
+      "proyecto": "Shooter multijogador completo (publicado no Itch.io)"
+    },
+    {
+      "numero": 9,
+      "titulo": "Projeto de Formatura: Início do Desenvolvimento",
+      "descripcion": "{alumno} começou seu projeto de formatura: concebeu seu próprio jogo, criou um documento de design e aprendeu controle de versões com o GitHub.",
+      "aprendizajes": [
+        "Fundamentos de game design",
+        "Documento de conceito (concept document)",
+        "Controle de versões e GitHub",
+        "Design de níveis e estética visual",
+        "Publicação beta e testes"
+      ],
+      "proyecto": "Conceito e versão beta do projeto de formatura"
+    },
+    {
+      "numero": 10,
+      "titulo": "Projeto de Formatura e Conclusão do Curso",
+      "descripcion": "Na etapa final, {alumno} concluiu e apresentou seu próprio jogo, com design e mecânicas originais, publicando-o no Itch.io.",
+      "aprendizajes": [
+        "Onboarding do jogador e interface intuitiva",
+        "Publicação do projeto no Itch.io",
+        "Ajustes finais e polimento",
+        "Apresentação do projeto para o grupo",
+        "Formatura do curso"
+      ],
+      "proyecto": "Projeto final original e jogável (publicado no Itch.io)"
+    }
+  ],
+  "consideraciones": "Durante sua passagem pelo Unity, {alumno} trabalhou importantes conceitos técnicos e criativos, consolidando uma base sólida no desenvolvimento de jogos. As competências trabalhadas ao longo do curso foram:",
+  "competencias": [
+    "Programação em C#",
+    "Programação orientada a objetos",
+    "Design de jogos (2D e 3D)",
+    "Física e animação no Unity",
+    "Desenvolvimento multijogador (Photon)",
+    "Interface de usuário (UI)",
+    "Controle de versões com GitHub",
+    "Publicação de projetos (Itch.io)",
+    "Resolução de problemas e pensamento computacional"
+  ],
+  "proximo_paso": {
+    "titulo": "Python Pro",
+    "texto": "Considerando o domínio de {alumno} na programação com C# e no desenvolvimento de jogos, o próximo passo recomendado é o Python Pro, onde levará sua lógica de programação a projetos mais amplos — aplicativos, automação e uma introdução a áreas como o desenvolvimento de software e a inteligência artificial."
+  }
+}

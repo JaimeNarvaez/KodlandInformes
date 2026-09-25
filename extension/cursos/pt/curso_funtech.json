@@ -1,0 +1,44 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_funtech.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Exploradores FunTech",
+  "idioma": "pt",
+  "area_interes": "Iniciação Digital e Criatividade",
+  "proximo_nivel": "A Magia do Código com Scratch",
+  "vision_general": "Ao longo do Exploradores FunTech, {alumno} deu seus primeiros passos no mundo digital: lógica, programação em blocos, criatividade e seus primeiros projetos. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {"numero": 1, "titulo": "Primeiros Passos na Lógica", "descripcion": "{alumno} conheceu o computador e criou seus primeiros algoritmos.", "aprendizajes": ["Uso do mouse e do teclado", "Algoritmos e sequências", "Desafios lógicos"], "proyecto": "Primeiros desafios de lógica"},
+    {"numero": 2, "titulo": "Viagem à Programação", "descripcion": "{alumno} aprendeu laços e a resolver sequências.", "aprendizajes": ["Sequenciação", "Laços e repetições", "Quebra-cabeças lógicos"], "proyecto": "Quebra-cabeças de programação"},
+    {"numero": 3, "titulo": "O Vale dos Dados", "descripcion": "{alumno} conheceu os arquivos e a internet.", "aprendizajes": ["Estrutura de arquivos e pastas", "Navegar na internet", "Detetive de dados"], "proyecto": "Pesquisa digital"},
+    {"numero": 4, "titulo": "Tecnocriadores (Scratch Junior)", "descripcion": "{alumno} criou seu primeiro desenho animado no Scratch Junior.", "aprendizajes": ["A plataforma Scratch Junior", "Programação em blocos", "Criação de projetos"], "proyecto": "Desenho animado no Scratch Junior"},
+    {"numero": 5, "titulo": "Cibermagia com Scratch Junior", "descripcion": "{alumno} criou seu próprio jogo com novos blocos.", "aprendizajes": ["Mensagens no Scratch Junior", "Cartões interativos", "Personagens animados"], "proyecto": "Jogo próprio no Scratch Junior"},
+    {"numero": 6, "titulo": "Números e Tecnologia", "descripcion": "{alumno} aprendeu matemática básica com o Google Planilhas.", "aprendizajes": ["Operações matemáticas básicas", "Introdução ao Google Planilhas", "Trabalhar com números"], "proyecto": "Atividades no Google Planilhas"},
+    {"numero": 7, "titulo": "Criadores Cibernéticos (Scratch)", "descripcion": "{alumno} criou jogos completos no Scratch.", "aprendizajes": ["Programação em blocos no Scratch", "Mecânicas de jogo", "Publicação do jogo"], "proyecto": "Jogo próprio"},
+    {"numero": 8, "titulo": "Heróis Digitais", "descripcion": "{alumno} explorou a lógica de comandos em várias atividades.", "aprendizajes": ["Programar o percurso de um robô", "Mini-histórias com comandos", "Ritmos, melodias e padrões"], "proyecto": "Robô, história e música"},
+    {"numero": 9, "titulo": "O Laboratório de Ideias", "descripcion": "{alumno} reforçou sua lógica e criatividade criando um jogo.", "aprendizajes": ["Gráficos por comandos", "Oficina de som", "Jogo com regras e apresentação"], "proyecto": "Jogo próprio com regras"},
+    {"numero": 10, "titulo": "O Desafio para Subir de Nível", "descripcion": "{alumno} revisou suas habilidades e montou seu portfólio.", "aprendizajes": ["Revisão de habilidades digitais", "Maratona de programação", "Portfólio digital"], "proyecto": "Portfólio do nível 1"},
+    {"numero": 11, "titulo": "Descobrindo o Mundo Digital", "descripcion": "{alumno} criou desenhos, GIFs e melodias.", "aprendizajes": ["Mouse e teclado", "Desenhos digitais", "Animações GIF e melodias"], "proyecto": "Desenho, GIF e melodia"},
+    {"numero": 12, "titulo": "Uma Aventura em Colorville", "descripcion": "{alumno} conheceu um editor gráfico e desenhou com formas.", "aprendizajes": ["Editor gráfico", "Desenhar com linhas e formas", "Primeiros desenhos digitais"], "proyecto": "Desenhos em Colorville"},
+    {"numero": 13, "titulo": "De uma Ideia a um Pôster", "descripcion": "{alumno} editou fotos e criou quadrinhos, pôsteres e cartões.", "aprendizajes": ["Edição de fotos", "Texto e quadrinhos", "Design de pôsteres e cartões"], "proyecto": "Pôster e cartão digital"},
+    {"numero": 14, "titulo": "Google Docs e Internet", "descripcion": "{alumno} aprendeu a escrever documentos e a navegar com segurança.", "aprendizajes": ["Criar e editar no Google Docs", "Segurança na internet", "Atalhos de teclado"], "proyecto": "Documento próprio"},
+    {"numero": 15, "titulo": "Oficina da Imaginação (Canva)", "descripcion": "{alumno} desenvolveu sua criatividade criando no Canva.", "aprendizajes": ["Criatividade com Droodles", "Adesivos no Canva", "Design de uma rotina diária"], "proyecto": "Designs no Canva"},
+    {"numero": 16, "titulo": "Estúdio de Desenhos Animados", "descripcion": "{alumno} criou animações e as transformou em vídeos.", "aprendizajes": ["Primeiros passos na animação", "Animação no Flipanim", "Transformar animações em vídeo"], "proyecto": "Animação em vídeo"},
+    {"numero": 17, "titulo": "Criadores Cibernéticos (Google Slides)", "descripcion": "{alumno} criou apresentações coloridas em equipe.", "aprendizajes": ["Introdução ao Google Slides", "Escrever uma história", "Projeto em equipe"], "proyecto": "Apresentação em equipe"},
+    {"numero": 18, "titulo": "Diretores Virtuais", "descripcion": "{alumno} planejou e criou seu próprio curta de animação.", "aprendizajes": ["Roteiro: personagens e história", "Quadros e cenários", "Edição e som"], "proyecto": "Curta de animação"},
+    {"numero": 19, "titulo": "Exploradores Digitais", "descripcion": "{alumno} criou caças ao tesouro e quebra-cabeças digitais.", "aprendizajes": ["Quebra-cabeças com imagens", "Criar uma caça ao tesouro digital", "Observação e trabalho em equipe"], "proyecto": "Caça ao tesouro digital própria"},
+    {"numero": 20, "titulo": "Tarefas Criativas e Modelagem 3D", "descripcion": "Na etapa final, {alumno} conheceu a modelagem 3D e se formou.", "aprendizajes": ["Conceitos básicos de modelagem 3D", "Pensamento lógico e atenção", "Aula de formatura"], "proyecto": "Modelo 3D e formatura"}
+  ],
+  "consideraciones": "Durante o Exploradores FunTech, {alumno} deu seus primeiros passos no mundo digital combinando lógica, programação em blocos e criatividade. As competências trabalhadas foram:",
+  "competencias": [
+    "Uso do computador (mouse e teclado)",
+    "Lógica, algoritmos e sequências",
+    "Programação em blocos (Scratch Jr e Scratch)",
+    "Ferramentas digitais (Docs, Planilhas, Slides, Canva)",
+    "Criatividade digital (desenho e animação)",
+    "Modelagem 3D básica",
+    "Trabalho em equipe e apresentação"
+  ],
+  "proximo_paso": {
+    "titulo": "A Magia do Código com Scratch",
+    "texto": "Considerando o grande avanço de {alumno} em seus primeiros passos digitais, o próximo passo recomendado é A Magia do Código com Scratch, onde aprofundará a programação em blocos criando jogos e histórias mais completos."
+  }
+}

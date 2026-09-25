@@ -1,0 +1,144 @@
+{
+  "_ayuda": "Traducción al portugués (Brasil) de reportes/curso_creatividad_2.json. Si se cambia el original, hay que cambiar también este. {alumno} se reemplaza por el nombre.",
+  "curso": "Criatividade Digital (Nível 2)",
+  "idioma": "pt",
+  "area_interes": "Arte e Design Digital",
+  "proximo_nivel": "Design Gráfico",
+  "vision_general": "Ao longo do Criatividade Digital 2, {alumno} ampliou seu domínio da arte digital com ferramentas profissionais: inteligência artificial, Canva, Krita, animação 2D, modelagem 3D, Figma e web design. O gráfico mostra o aproveitamento registrado em cada módulo, evidenciando as áreas de maior domínio e as oportunidades de reforço.",
+  "modulos": [
+    {
+      "numero": 1,
+      "titulo": "Imersão na Criatividade Digital",
+      "descripcion": "{alumno} criou personagens usando IA, pixel art e animação.",
+      "aprendizajes": [
+        "Criação de um avatar",
+        "Uso de IA para desenhar mundos",
+        "Pixel art no Piskel",
+        "Animação de emoções no FlipAnim"
+      ],
+      "proyecto": "Personagem com IA, pixel art e animação"
+    },
+    {
+      "numero": 2,
+      "titulo": "Design Gráfico no Canva",
+      "descripcion": "{alumno} conheceu o design gráfico criando uma identidade de marca.",
+      "aprendizajes": [
+        "Fundamentos do design gráfico",
+        "Teoria das cores e composição",
+        "Criação de um logotipo",
+        "Adesivos, produtos e cartões"
+      ],
+      "proyecto": "Manual de marca próprio"
+    },
+    {
+      "numero": 3,
+      "titulo": "Ilustração 2D no Krita",
+      "descripcion": "{alumno} aprendeu a ilustrar digitalmente com o Krita.",
+      "aprendizajes": [
+        "Fundamentos do desenho no Krita",
+        "Da ideia ao esboço",
+        "Arte-final, sombreamento e colorização"
+      ],
+      "proyecto": "Design de doces (Sugar Rush)"
+    },
+    {
+      "numero": 4,
+      "titulo": "Uma História em Quadrinhos no Krita",
+      "descripcion": "{alumno} criou sua própria história em quadrinhos aplicando a narrativa ilustrada.",
+      "aprendizajes": [
+        "As etapas de criação de uma história em quadrinhos",
+        "Criar uma história empolgante",
+        "Design de personagem e quadros",
+        "Diálogos e apresentação"
+      ],
+      "proyecto": "História em quadrinhos de uma página"
+    },
+    {
+      "numero": 5,
+      "titulo": "Animação 2D no WickEditor",
+      "descripcion": "{alumno} deu seus primeiros passos na animação 2D.",
+      "aprendizajes": [
+        "Fundamentos e princípios da animação 2D",
+        "Animação de emoções no WickEditor",
+        "Criação de cenas",
+        "Captura de vídeo"
+      ],
+      "proyecto": "Vídeo animado sobre emoções"
+    },
+    {
+      "numero": 6,
+      "titulo": "Vídeo Promocional no WickEditor",
+      "descripcion": "{alumno} aprofundou-se na animação de personagens criando um anúncio.",
+      "aprendizajes": [
+        "Preparar um personagem para animar",
+        "Animação básica de personagens",
+        "Cena de animação complexa",
+        "Edição com efeitos sonoros"
+      ],
+      "proyecto": "Anúncio animado"
+    },
+    {
+      "numero": 7,
+      "titulo": "Mundo 3D no Spline",
+      "descripcion": "{alumno} modelou em 3D com a ferramenta Spline.",
+      "aprendizajes": [
+        "Primeiros passos na modelagem 3D",
+        "Materiais e texturas",
+        "Design de uma invenção",
+        "Apresentação do modelo"
+      ],
+      "proyecto": "Modelo 3D (invenção do futuro)"
+    },
+    {
+      "numero": 8,
+      "titulo": "Gráficos Vetoriais no Figma",
+      "descripcion": "{alumno} aprendeu a trabalhar com gráficos vetoriais no Figma.",
+      "aprendizajes": [
+        "Conceitos básicos do Figma",
+        "Criar um avatar único",
+        "Funções avançadas do Figma",
+        "Animação do design"
+      ],
+      "proyecto": "Monstro vetorial animado"
+    },
+    {
+      "numero": 9,
+      "titulo": "O Cartão do Criador Digital (Web)",
+      "descripcion": "{alumno} criou seu portfólio digital em um site.",
+      "aprendizajes": [
+        "Introdução ao WIX e ao web design",
+        "Portfólio em um site",
+        "Página de autopromoção",
+        "Apresentação do site"
+      ],
+      "proyecto": "Portfólio web próprio"
+    },
+    {
+      "numero": 10,
+      "titulo": "Projeto Final e Formatura",
+      "descripcion": "Na etapa final, {alumno} realizou e apresentou seu projeto independente.",
+      "aprendizajes": [
+        "Revisão do que foi aprendido",
+        "Projeto independente final",
+        "Preparação da autoapresentação",
+        "Compartilhar os resultados"
+      ],
+      "proyecto": "Projeto criativo independente"
+    }
+  ],
+  "consideraciones": "Durante o Criatividade Digital 2, {alumno} dominou um leque de ferramentas profissionais de arte e design digital e aprendeu a apresentar seu trabalho em um portfólio. As competências trabalhadas foram:",
+  "competencias": [
+    "Uso criativo da inteligência artificial",
+    "Design gráfico e identidade de marca (Canva)",
+    "Ilustração digital (Krita) e quadrinhos",
+    "Animação 2D (WickEditor)",
+    "Modelagem 3D (Spline)",
+    "Gráficos vetoriais (Figma)",
+    "Web design e portfólio (WIX)",
+    "Apresentação de projetos"
+  ],
+  "proximo_paso": {
+    "titulo": "Design Gráfico",
+    "texto": "Considerando o domínio criativo de {alumno}, o próximo passo recomendado é um curso de Design Gráfico ou Ilustração, onde aprofundará as ferramentas profissionais e construirá um portfólio mais sólido."
+  }
+}

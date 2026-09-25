@@ -20,6 +20,3 @@ venv/
 Thumbs.db
 .DS_Store
 
-# Puente de la extension: el manifest lleva rutas locales y el ID de la extension
-puente/com.kodland.informes.json
-puente/puente.log
