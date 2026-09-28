@@ -163,6 +163,14 @@ no se completan en la extensión (los `datos_<grupo>.json` son solo de Python).
 Instalación, una vez por PC: `chrome://extensions` → Modo de desarrollador →
 *Cargar extensión sin empaquetar* → carpeta `extension/`. Nada más.
 
+Para repartirla: `py -3 empaquetar_extension.py` comprueba sincronía y pruebas y
+deja `dist/Kodland Informes <versión>.zip` (dist/ no se sube). Dentro va
+`INSTRUCCIONES.txt` (español y portugués) para quien la instala. Para una
+versión nueva: subir `version` en `manifest.json`, empaquetar y reenviar; cada
+persona reemplaza los archivos de su carpeta y pulsa recargar en
+`chrome://extensions`. (Publicarla en la Chrome Web Store queda pendiente: haría
+falta el visto bueno de Kodland, un icono, capturas y política de privacidad.)
+
 `pruebas/probar_extension.py` la carga en **Edge** (Chrome estable ya no acepta
 `--load-extension` y el Chromium de Playwright lo bloquea Windows en este
 equipo) con Kodland simulado, pulsa el botón y revisa el PDF.

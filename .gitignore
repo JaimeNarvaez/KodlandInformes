@@ -20,3 +20,6 @@ venv/
 Thumbs.db
 .DS_Store
 
+
+# Extension empaquetada para repartir (se genera con empaquetar_extension.py)
+dist/

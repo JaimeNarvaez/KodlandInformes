@@ -1,0 +1,59 @@
+KODLAND INFORMES - Instalación / Instalação
+=============================================
+
+--- ESPAÑOL ---------------------------------
+
+Se instala una sola vez. No hace falta instalar nada más.
+
+1. Descomprime este .zip en una carpeta que NO vayas a borrar ni mover,
+   por ejemplo: Documentos\Kodland Informes
+   (si la borras o la mueves, la extensión deja de funcionar).
+2. Abre Chrome y escribe en la barra de direcciones:  chrome://extensions
+3. Activa "Modo de desarrollador" (interruptor arriba a la derecha).
+4. Pulsa "Cargar extensión sin empaquetar" y elige la carpeta del paso 1
+   (la que contiene el archivo manifest.json).
+5. Listo. Entra a bo.kodland.org con tu cuenta, abre la ficha de un alumno
+   y pulsa el botón morado "Generar informe" (abajo a la izquierda).
+
+Uso:
+- Se genera un PDF por cada grupo en que el alumno está activo, y Chrome
+  pregunta dónde guardarlo con el nombre "<alumno> - <grupo>.pdf".
+- Si la página de Kodland está en portugués, el informe sale en portugués.
+- Mientras se genera, Chrome muestra arriba "Kodland Informes está depurando
+  este navegador": es normal, desaparece al terminar.
+
+Para actualizar a una versión nueva: reemplaza los archivos de la carpeta por
+los del .zip nuevo, entra a chrome://extensions y pulsa el botón de recargar
+(flecha circular) de "Kodland Informes". Luego recarga la página de Kodland (F5).
+
+Si algo falla: recarga la página de Kodland (F5) e inténtalo de nuevo. Si
+sigue fallando, envía una captura del mensaje que aparece junto al botón.
+
+
+--- PORTUGUÊS -------------------------------
+
+Instala-se uma única vez. Não é preciso instalar mais nada.
+
+1. Descompacte este .zip em uma pasta que você NÃO vá apagar nem mover,
+   por exemplo: Documentos\Kodland Informes
+   (se apagar ou mover a pasta, a extensão deixa de funcionar).
+2. Abra o Chrome e digite na barra de endereços:  chrome://extensions
+3. Ative o "Modo do desenvolvedor" (botão no canto superior direito).
+4. Clique em "Carregar sem compactação" e escolha a pasta do passo 1
+   (a que contém o arquivo manifest.json).
+5. Pronto. Entre em bo.kodland.org com a sua conta, abra a ficha de um aluno
+   e clique no botão roxo "Gerar relatório" (no canto inferior esquerdo).
+
+Uso:
+- É gerado um PDF para cada turma em que o aluno está ativo, e o Chrome
+  pergunta onde salvá-lo com o nome "<aluno> - <turma>.pdf".
+- Se a página do Kodland estiver em português, o relatório sai em português.
+- Enquanto gera, o Chrome mostra no topo "Kodland Informes está depurando
+  este navegador": é normal, some ao terminar.
+
+Para atualizar para uma versão nova: substitua os arquivos da pasta pelos do
+.zip novo, entre em chrome://extensions e clique no botão de recarregar (seta
+circular) de "Kodland Informes". Depois recarregue a página do Kodland (F5).
+
+Se algo der errado: recarregue a página do Kodland (F5) e tente de novo. Se
+continuar, envie uma captura da mensagem que aparece ao lado do botão.
