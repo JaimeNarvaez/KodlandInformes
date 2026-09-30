@@ -58,6 +58,7 @@ Todo lo demás es librería estándar; conviene que siga así.
 | `sincronizar_extension.py` | Copia a `extension/` textos, estilos, cursos y banners |
 | `pruebas/comparar_generadores.py` | Comprueba que la extensión y Python dan el mismo HTML y datos |
 | `pruebas/probar_extension.py` | Prueba de punta a punta de la extensión con Kodland simulado |
+| `pruebas/probar_secciones.py` | Comprueba las secciones opcionales de la extensión |
 
 El flujo es: `informes.py` abre Chrome con perfil persistente → `esperar_sesion`
 → `listar_grupos` → por cada grupo, `generar_reportes_grupo`, que consulta la
@@ -151,9 +152,22 @@ otro sitio: usa la sesión abierta de quien la usa.
    `chrome.debugger` + `Page.printToPDF` en una ventana minimizada, en las dos
    pasadas de siempre (render, medir `.mod`, rehacer). Mientras tanto Chrome
    muestra la barra de "está depurando este navegador": es normal.
-3. Cada PDF se guarda con la ventana de **Guardar como**, que sugiere
+3. El enlace **⚙ Secciones del informe** despliega cuatro casillas: notas y
+   asistencia, asistencia a clases, detalle por módulo y consideraciones
+   finales. **Siempre arrancan marcadas y no se recuerdan** entre usos, para que
+   nadie mande un informe recortado sin querer. La carátula, la portada, la
+   firma del tutor y el pie no se pueden quitar; si se quitan las
+   consideraciones (que es donde vive la firma), esta se pega al final de la
+   última hoja y el reparto le reserva 120 px.
+4. Cada PDF se guarda con la ventana de **Guardar como**, que sugiere
    `<alumno> - <código del grupo>.pdf`. El aviso junto al botón dice qué
    grupos salieron y por qué no los demás (sin empezar, terminado…).
+
+Las secciones opcionales **solo están en la extensión**: los scripts de Python
+sacan siempre el informe completo. Por eso el valor por defecto de `secciones`
+en `buildHtml` (JS) es el informe entero: así el HTML sigue saliendo idéntico al
+de `generar_reporte.py` y `comparar_generadores.py` sigue pasando. Si algún día
+se añaden a Python, hay que hacerlo en los dos a la vez.
 
 Los textos, estilos, cursos y banners **no se editan en `extension/`**: salen
 de `generar_reporte.py` y `reportes/` con `sincronizar_extension.py`

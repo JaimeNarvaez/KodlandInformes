@@ -75,7 +75,14 @@ function banda(pct, ui) {
 }
 
 // banner: data URI de la imagen (con el texto en el idioma del informe)
-export function buildHtml(curso, alumno, altos = null, banner = '') {
+export function buildHtml(curso, alumno, altos = null, banner = '', secciones = null) {
+  // Secciones que se incluyen. Por defecto el informe va completo: así el HTML
+  // sale idéntico al de generar_reporte.py (pruebas/comparar_generadores.py lo
+  // compara carácter a carácter).
+  const sec = Object.assign(
+    { notas: true, asistencia: true, modulos: true, consideraciones: true },
+    secciones || {},
+  );
   const idioma = alumno.idioma || curso.idioma || 'es';
   const ui = UI[idioma] || UI.es;
   const nombre = alumno.alumno;
@@ -214,7 +221,7 @@ export function buildHtml(curso, alumno, altos = null, banner = '') {
 
   // --- calificaciones y asistencia ---
   let califHtml = '';
-  if (combinado) {
+  if (combinado && (sec.notas || sec.asistencia)) {
     let filas = '';
     mods.forEach((m, i) => {
       const p = pcts[i];
@@ -236,16 +243,21 @@ export function buildHtml(curso, alumno, altos = null, banner = '') {
       const [c, txt] = et[s.estado] || ['aus', s.estado];
       sesHtml += `<div class="ses ${c}"><div class="f">${esc(s.fecha)}</div><div class="e">${txt}</div></div>`;
     }
-    const asisBloque = asis
+    const asisBloque = asis && sec.asistencia
       ? `<div class="seccion"><div class="cuad"></div><h2>${ui.asis_titulo}</h2></div>` +
         `<div class="asis-grid">${sesHtml}</div>` : '';
-    califHtml = `
+    califHtml = sec.notas ? `
 <div class="pagina">
   <div class="seccion"><div class="cuad"></div><h2>${ui.calif}</h2></div>
   <table class="calif">
     <tr><th>${ui.th_modulo}</th><th class="n">${ui.th_tareas}</th><th class="n">${ui.th_puntos}</th><th>${ui.th_avance}</th></tr>
     ${filas}
   </table>
+  ${asisBloque}
+  <div class="pie-num">Kodland · ${ui.pagina}</div>
+</div>
+` : `
+<div class="pagina">
   ${asisBloque}
   <div class="pie-num">Kodland · ${ui.pagina}</div>
 </div>
@@ -281,13 +293,22 @@ export function buildHtml(curso, alumno, altos = null, banner = '') {
     if (act.length) hojas.push(act);
     return hojas;
   };
-  const gruposMod = n ? repartir() : [];
+  const gruposMod = n && sec.modulos ? repartir() : [];
   for (let k = gruposMod.length - 1; k > 0; k--) {
     while (gruposMod[k - 1].length - gruposMod[k].length >= 2) {
       const i = gruposMod[k - 1][gruposMod[k - 1].length - 1];
       if (gruposMod[k].reduce((s, j) => s + alturas[j], 0) + alturas[i] > ALTO_HOJA) break;
       gruposMod[k].unshift(gruposMod[k - 1].pop());
     }
+  }
+
+  // Si el cierre no va, la firma se pega al final de la última hoja: hay que
+  // dejarle su sitio (mide unos 120 px) para no desbordar la página.
+  if (!sec.consideraciones && gruposMod.length) {
+    const ult = gruposMod[gruposMod.length - 1];
+    const altoUlt = ult.reduce((suma, j) => suma + alturas[j], 0);
+    const tope = gruposMod.length === 1 ? ALTO_HOJA_1 : ALTO_HOJA;
+    if (altoUlt + 120 > tope && ult.length > 1) gruposMod.push([ult.pop()]);
   }
 
   let paginasMod = '';
@@ -325,7 +346,7 @@ export function buildHtml(curso, alumno, altos = null, banner = '') {
   // --- cierre ---
   const comp = (curso.competencias || []).map((c) => `<div class="c"><b>✓</b>${esc(c)}</div>`).join('');
   const paso = curso.proximo_paso || {};
-  const cierre = `
+  const cierre = sec.consideraciones ? `
 <div class="pagina">
   <div class="seccion"><div class="cuad"></div><h2>${ui.consideraciones}</h2></div>
   <div class="intro">${enNegrita(curso.consideraciones || '')}</div>
@@ -350,7 +371,32 @@ export function buildHtml(curso, alumno, altos = null, banner = '') {
   </div>
   <div class="pie-num">Kodland · ${ui.pagina}</div>
 </div>
+` : '';
+
+  // La firma del tutor y el pie no se quitan nunca. Si no hay consideraciones
+  // finales (que es donde viven), se pegan al final de la última hoja que haya,
+  // para no dejar una página casi en blanco.
+  const firmaSuelta = `  <div class="firmas">
+    <div class="col-tutor">
+      <div class="fnombre">${esc(alumno.profesor || '') || '&nbsp;'}</div>
+      <div class="frol">${ui.tutor}</div>
+    </div>
+    <div class="copy">© Kodland, ${new Date().getFullYear()}</div>
+  </div>
+
+  <div class="pie">
+    <div class="barra"><span class="l">kodland</span><span class="c">${ui.pie_lema}</span><span style="color:#fff;font-weight:700;font-size:11px">kodland.com.br</span></div>
+  </div>
 `;
 
-  return `<!doctype html><html><head><meta charset='utf-8'><style>${ESTILOS}</style></head><body>${caratula}${portada}${califHtml}${paginasMod}${cierre}</body></html>`;
+  let cuerpo = `${caratula}${portada}${califHtml}${paginasMod}${cierre}`;
+  if (!sec.consideraciones) {
+    // sin indentación en la búsqueda: las hojas de módulos escriben el pie
+    // pegado, y hay que dar con el último de todo el documento
+    const corte = cuerpo.lastIndexOf('<div class="pie-num">');
+    cuerpo = corte < 0 ? cuerpo + firmaSuelta
+                       : cuerpo.slice(0, corte) + firmaSuelta + cuerpo.slice(corte);
+  }
+
+  return `<!doctype html><html><head><meta charset='utf-8'><style>${ESTILOS}</style></head><body>${cuerpo}</body></html>`;
 }

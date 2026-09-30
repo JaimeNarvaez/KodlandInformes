@@ -93,13 +93,13 @@ def main():
 
         pg = ctx.new_page()
         pg.goto(f"https://bo.kodland.org/students/{sid}")
-        boton = pg.locator("#ki-boton-informe button")
+        boton = pg.locator("#ki-generar")
         boton.wait_for(timeout=15000)
         print("botón:", boton.inner_text())
         boton.click()
-        aviso = pg.locator("#ki-boton-informe div")
+        aviso = pg.locator("#ki-aviso")
         pg.wait_for_function(
-            "() => /[✅❌]|Nenhum|Ningún/.test(document.querySelector('#ki-boton-informe div').textContent)",
+            "() => /[✅❌]|Nenhum|Ningún/.test(document.querySelector('#ki-aviso').textContent)",
             timeout=180000)
         texto = aviso.inner_text()
         print("aviso:\n" + texto)

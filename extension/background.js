@@ -111,7 +111,7 @@ async function generarInformes(msg, avisar) {
       }
       if (!motor) motor = await abrirMotor();
       const imagen = await banner(r.alumno.idioma);
-      const pdf = await motor.pdf((altos) => buildHtml(r.curso, r.alumno, altos, imagen));
+      const pdf = await motor.pdf((altos) => buildHtml(r.curso, r.alumno, altos, imagen, msg.secciones));
       const archivo = nombreArchivo(r.alumno.alumno, grupo.codigo);
       await chrome.downloads.download({
         url: 'data:application/pdf;base64,' + pdf, filename: archivo,

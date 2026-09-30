@@ -37,6 +37,13 @@
       },
       error: 'No se pudo generar el informe',
       recargar: 'La extensión se actualizó: recarga esta página (F5) y vuelve a intentarlo.',
+      secciones: 'Secciones del informe',
+      sec: {
+        notas: 'Notas y asistencia',
+        asistencia: 'Asistencia a clases',
+        modulos: 'Detalle por módulo',
+        consideraciones: 'Consideraciones finales',
+      },
     },
     pt: {
       boton: '📄 Gerar relatório',
@@ -57,6 +64,13 @@
       },
       error: 'Não foi possível gerar o relatório',
       recargar: 'A extensão foi atualizada: recarregue esta página (F5) e tente de novo.',
+      secciones: 'Seções do relatório',
+      sec: {
+        notas: 'Notas e presença',
+        asistencia: 'Presença nas aulas',
+        modulos: 'Detalhamento por módulo',
+        consideraciones: 'Considerações finais',
+      },
     },
   };
 
@@ -165,6 +179,7 @@
     });
 
     const estado = document.createElement('div');
+    estado.id = 'ki-aviso';
     estilo(estado, {
       display: 'none', maxWidth: '320px', padding: '8px 10px', borderRadius: '8px',
       background: '#fff', color: '#223', fontSize: '12px', whiteSpace: 'pre-wrap',
@@ -172,12 +187,48 @@
     });
 
     const boton = document.createElement('button');
+    boton.id = 'ki-generar';
     boton.textContent = t().boton;
     boton.title = t().ayuda;
     estilo(boton, {
       background: '#6c2bd9', color: '#fff', border: 'none', borderRadius: '24px',
       padding: '10px 16px', fontWeight: '600', fontSize: '14px', cursor: 'pointer',
       boxShadow: '0 2px 10px rgba(0,0,0,.25)',
+    });
+
+    // Casillas para elegir qué lleva el informe. Siempre arrancan todas
+    // marcadas: nadie debe generar un informe recortado sin querer.
+    const panel = document.createElement('div');
+    estilo(panel, {
+      display: 'none', padding: '8px 10px', borderRadius: '8px', background: '#fff',
+      color: '#223', fontSize: '12px', boxShadow: '0 2px 10px rgba(0,0,0,.2)',
+    });
+    const casillas = {};
+    for (const clave of ['notas', 'asistencia', 'modulos', 'consideraciones']) {
+      const fila = document.createElement('label');
+      estilo(fila, {
+        display: 'flex', alignItems: 'center', gap: '6px',
+        padding: '3px 0', cursor: 'pointer', whiteSpace: 'nowrap',
+      });
+      const marca = document.createElement('input');
+      marca.type = 'checkbox';
+      marca.checked = true;
+      casillas[clave] = marca;
+      const texto = document.createElement('span');
+      texto.textContent = t().sec[clave];
+      fila.appendChild(marca);
+      fila.appendChild(texto);
+      panel.appendChild(fila);
+    }
+
+    const alterna = document.createElement('button');
+    alterna.textContent = '⚙ ' + t().secciones;
+    estilo(alterna, {
+      background: 'none', border: 'none', padding: '0', color: '#6c2bd9',
+      fontSize: '12px', fontWeight: '600', cursor: 'pointer', textAlign: 'left',
+    });
+    alterna.addEventListener('click', () => {
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
     });
 
     function avisar(texto, error) {
@@ -193,9 +244,9 @@
       }
     });
 
-    function enviar(alumno, respuestas) {
+    function enviar(alumno, respuestas, secciones) {
       return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ tipo: 'informe', alumno, respuestas, idioma: idiomaPagina() }, (resp) => {
+        chrome.runtime.sendMessage({ tipo: 'informe', alumno, respuestas, secciones, idioma: idiomaPagina() }, (resp) => {
           if (chrome.runtime.lastError) {
             resolve({ ok: false, error: 'excepcion', detalle: chrome.runtime.lastError.message });
           } else {
@@ -211,8 +262,10 @@
       boton.disabled = true;
       boton.style.opacity = '.6';
       try {
+        const secciones = {};
+        for (const clave of Object.keys(casillas)) secciones[clave] = casillas[clave].checked;
         const respuestas = await reunir(alumno, avisar);
-        const [texto, error] = resumen(await enviar(alumno, respuestas));
+        const [texto, error] = resumen(await enviar(alumno, respuestas, secciones));
         avisar(texto, error);
       } catch (e) {
         const texto = String((e && e.message) || e);
@@ -225,6 +278,8 @@
     });
 
     caja.appendChild(estado);
+    caja.appendChild(panel);
+    caja.appendChild(alterna);
     caja.appendChild(boton);
     return caja;
   }
