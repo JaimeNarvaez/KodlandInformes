@@ -200,19 +200,20 @@
     // marcadas: nadie debe generar un informe recortado sin querer.
     const panel = document.createElement('div');
     estilo(panel, {
-      display: 'none', padding: '8px 10px', borderRadius: '8px', background: '#fff',
-      color: '#223', fontSize: '12px', boxShadow: '0 2px 10px rgba(0,0,0,.2)',
+      display: 'none', padding: '10px 12px', borderRadius: '8px', background: '#fff',
+      color: '#223', fontSize: '13.5px', boxShadow: '0 2px 10px rgba(0,0,0,.2)',
     });
     const casillas = {};
     for (const clave of ['notas', 'asistencia', 'modulos', 'consideraciones']) {
       const fila = document.createElement('label');
       estilo(fila, {
-        display: 'flex', alignItems: 'center', gap: '6px',
-        padding: '3px 0', cursor: 'pointer', whiteSpace: 'nowrap',
+        display: 'flex', alignItems: 'center', gap: '8px',
+        padding: '4px 0', cursor: 'pointer', whiteSpace: 'nowrap',
       });
       const marca = document.createElement('input');
       marca.type = 'checkbox';
       marca.checked = true;
+      estilo(marca, { width: '16px', height: '16px', margin: '0', cursor: 'pointer' });
       casillas[clave] = marca;
       const texto = document.createElement('span');
       texto.textContent = t().sec[clave];
@@ -224,8 +225,8 @@
     const alterna = document.createElement('button');
     alterna.textContent = '⚙ ' + t().secciones;
     estilo(alterna, {
-      background: 'none', border: 'none', padding: '0', color: '#6c2bd9',
-      fontSize: '12px', fontWeight: '600', cursor: 'pointer', textAlign: 'left',
+      background: 'none', border: 'none', padding: '4px 2px', color: '#6c2bd9',
+      fontSize: '14px', fontWeight: '600', cursor: 'pointer', textAlign: 'left',
     });
     alterna.addEventListener('click', () => {
       panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
