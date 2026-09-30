@@ -222,10 +222,24 @@
       panel.appendChild(fila);
     }
 
+    // El enlace no tiene fondo propio, así que hereda el de la página. El
+    // backoffice tiene tema claro y oscuro: sobre el oscuro el morado del botón
+    // se pierde, así que se aclara sólo cuando hace falta.
+    const fondoOscuro = () => {
+      for (const el of [document.body, document.documentElement]) {
+        const n = el && getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+        if (n && n.length >= 3 && (n.length < 4 || Number(n[3]) > 0)) {
+          return 0.299 * Number(n[0]) + 0.587 * Number(n[1]) + 0.114 * Number(n[2]) < 140;
+        }
+      }
+      return true;   // sin fondo declarado, el del backoffice es oscuro
+    };
+
     const alterna = document.createElement('button');
     alterna.textContent = '⚙ ' + t().secciones;
     estilo(alterna, {
-      background: 'none', border: 'none', padding: '4px 2px', color: '#6c2bd9',
+      background: 'none', border: 'none', padding: '4px 2px',
+      color: fondoOscuro() ? '#c9b3ff' : '#6c2bd9',
       fontSize: '14px', fontWeight: '600', cursor: 'pointer', textAlign: 'left',
     });
     alterna.addEventListener('click', () => {
