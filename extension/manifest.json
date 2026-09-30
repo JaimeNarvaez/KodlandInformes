@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kodland Informes",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Botón en la ficha del alumno de bo.kodland.org para generar su informe de desarrollo en PDF.",
   "permissions": ["debugger", "downloads"],
   "background": {

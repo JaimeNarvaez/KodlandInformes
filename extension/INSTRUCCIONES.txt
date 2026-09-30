@@ -19,6 +19,10 @@ Uso:
 - Se genera un PDF por cada grupo en que el alumno está activo, y Chrome
   pregunta dónde guardarlo con el nombre "<alumno> - <grupo>.pdf".
 - Si la página de Kodland está en portugués, el informe sale en portugués.
+- Si no quieres que el informe lleve alguna parte, pulsa "Secciones del informe"
+  (justo encima del botón) y desmarca lo que sobre: notas y asistencia,
+  asistencia a clases, detalle por módulo o consideraciones finales. Siempre
+  empieza con todo marcado; los datos del alumno y la firma no se quitan.
 - Mientras se genera, Chrome muestra arriba "Kodland Informes está depurando
   este navegador": es normal, desaparece al terminar.
 
@@ -48,6 +52,10 @@ Uso:
 - É gerado um PDF para cada turma em que o aluno está ativo, e o Chrome
   pergunta onde salvá-lo com o nome "<aluno> - <turma>.pdf".
 - Se a página do Kodland estiver em português, o relatório sai em português.
+- Se não quiser que o relatório leve alguma parte, clique em "Seções do
+  relatório" (logo acima do botão) e desmarque o que sobrar: notas e presença,
+  presença nas aulas, detalhamento por módulo ou considerações finais. Começa
+  sempre com tudo marcado; os dados do aluno e a assinatura não saem.
 - Enquanto gera, o Chrome mostra no topo "Kodland Informes está depurando
   este navegador": é normal, some ao terminar.
 
